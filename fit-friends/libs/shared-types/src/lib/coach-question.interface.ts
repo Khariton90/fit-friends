@@ -3,7 +3,7 @@ import { TypeTraining } from './type-training.enum';
 
 export interface CoachQuestion {
   trainLevel: TrainLevel,
-  typesTrainig: TypeTraining[],
+  typesTraining: TypeTraining[],
   sertificates: string,
   merits: string,
   personalTraining: boolean, 
