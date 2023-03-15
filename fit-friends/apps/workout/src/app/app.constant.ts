@@ -1,0 +1,1 @@
+export const ENV_FILE_WORKOUT_PATH = 'environments/.workout.env';

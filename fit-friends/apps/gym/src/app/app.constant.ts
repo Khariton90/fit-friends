@@ -1,0 +1,1 @@
+export const ENV_FILE_GYM_PATH = 'environments/.gym.env';
