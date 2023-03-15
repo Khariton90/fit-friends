@@ -1,9 +1,9 @@
 export enum TypeTraining {
-  yoga = "yoga", 
-  running = "running", 
-  boxing = "boxing", 
-  stretching = "stretching", 
-  crossfit = "crossfit", 
-  aerobics = "aerobics", 
-  pilates = "pilates",
+  Yoga = "yoga", 
+  Running = "running", 
+  Boxing = "boxing", 
+  Stretching = "stretching", 
+  Crossfit = "crossfit", 
+  Aerobics = "aerobics", 
+  Pilates = "pilates",
 }

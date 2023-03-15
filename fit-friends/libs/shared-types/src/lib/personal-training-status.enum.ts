@@ -1,5 +1,5 @@
 export enum PersonalTrainingStatus {
-  pending = "pending", 
-  rejected = "rejected", 
-  accepted = "accepted",
+  Pending = "pending", 
+  Rejected = "rejected", 
+  Accepted = "accepted",
 }

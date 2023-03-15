@@ -1,4 +1,4 @@
 export enum OrderType {
-  subscription = "subscription", 
-  training = "training"
+  Subscription = "subscription", 
+  Training = "training"
 }
