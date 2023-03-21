@@ -15,3 +15,4 @@ export * from './lib/comment.interface';
 export * from './lib/order.interface';
 export * from './lib/personal-training.interface';
 export * from './lib/notify.interface';
+export * from './lib/location.enum';

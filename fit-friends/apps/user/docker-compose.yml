@@ -9,7 +9,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: test
       MONGO_INITDB_DATABASE: fitfriends-user
     healthcheck:
-      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27017/fitfriends-user --quiet
+      test: echo 'db.runCommand("ping").ok' | mongosh mongo:27022/fitfriends-user --quiet
       interval: 10s
       timeout: 5s
       retries: 5

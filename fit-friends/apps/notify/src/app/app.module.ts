@@ -7,6 +7,7 @@ import databaseConfig from './config/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig } from './config/mongodb.config';
 import { NotifyModel, NotifySchema } from './notify.model';
+import envSchema from './env.schema';
 
 @Module({
   imports: [   
@@ -15,6 +16,7 @@ import { NotifyModel, NotifySchema } from './notify.model';
     isGlobal: true,
     envFilePath: ENV_FILE_NOTIFY_PATH,
     load: [databaseConfig],
+    validationSchema: envSchema,
   }),
     MongooseModule.forRootAsync(
       getMongoDbConfig(),

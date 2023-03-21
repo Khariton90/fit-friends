@@ -7,6 +7,7 @@ import { AppService } from './app.service';
 import databaseConfig from './config/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig } from './config/mongodb.config';
+import envSchema from './env.schema';
 
 @Module({
   imports: [   
@@ -15,6 +16,7 @@ import { getMongoDbConfig } from './config/mongodb.config';
     isGlobal: true,
     envFilePath: ENV_FILE_ORDER_PATH,
     load: [databaseConfig],
+    validationSchema: envSchema,
   }),
     MongooseModule.forRootAsync(
       getMongoDbConfig(),

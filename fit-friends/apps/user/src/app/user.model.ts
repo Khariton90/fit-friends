@@ -1,35 +1,57 @@
 import { Document } from "mongoose";
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Gender, User, UserRole, Location } from "@fit-friends/shared-types";
 
 @Schema({
   collection: 'user',
   timestamps: true,
   versionKey: false
 })
-export class UserModel extends Document {
-  @Prop()
+export class UserModel extends Document implements User {
+  @Prop({
+    required: true,
+  })
   username: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   email: string;
 
   @Prop()
   avatar: string;
 
-  @Prop()
+  @Prop({
+    required: true,
+  })
   passwordHash: string;
 
-  @Prop()
-  gender: string;
+  @Prop({
+    required: true,
+    type: String, 
+    enum: Gender
+  })
+  gender: Gender;
 
   @Prop()
   dateBirth: Date;
 
-  @Prop()
-  role: string;
+  @Prop({
+    required: true,
+    type: String, 
+    enum: UserRole
+  })
+  role: UserRole;
+
+  @Prop({
+    required: true,
+    type: String, 
+    enum: Location
+  })
+  location: Location;
 
   @Prop()
-  location: string;
+  createdAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(UserModel);
