@@ -40,4 +40,9 @@ export class FitUserService {
     const userEntity = await new FitUserEntity(user).setPassword(dto.password);
     return await this.fitUserRepository.create(userEntity);
   }
+
+  async findById(id: string) {
+    const user = await this.fitUserRepository.findById(id);
+    return user;
+  }
 }

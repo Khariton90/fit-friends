@@ -16,6 +16,12 @@ export class AuthController {
 
     return fillObject(ResponseUserDto, user);
   }
+
+  @Post('login')
+  async login(@Body() dto: LoginUserDto) {
+    const user = await this.authService.authorization(dto);
+    return this.authService.login(user);
+  }
 }
 
 

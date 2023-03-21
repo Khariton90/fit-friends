@@ -1,4 +1,3 @@
-import { ResponseUserDto } from './rdo/response-user.dto';
 import { FitUserRepository } from './../fit-user/fit-user.repository';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -31,9 +30,9 @@ export class AuthService {
     return existUser;
   }
 
-  async login(user: ResponseUserDto) {
+  async login(user: User) {
     const payload = {
-      sub: user.id.toString(),
+      sub: user._id.toString(),
       email: user.email
     }
 
@@ -44,7 +43,7 @@ export class AuthService {
     )
 
     await this.authRepository.create({ 
-      userId: user.id, 
+      userId: user._id, 
       refreshToken 
     });
 
