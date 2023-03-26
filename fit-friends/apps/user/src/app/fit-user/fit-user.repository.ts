@@ -1,3 +1,4 @@
+import { UpdateFitUserDto } from './dto/update-fit-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { FitUserEntity } from './fit-user-entity';
@@ -32,8 +33,8 @@ export class FitUserRepository implements CRUDRepository<FitUserEntity, string, 
     return userModel.save();
   }
 
-  public async update(id: string, item: FitUserEntity): Promise<User> {
-    const updateUser = await this.fitUserModel.findByIdAndUpdate(id, item);
+  public async update(id: string, item: UpdateFitUserDto): Promise<User> {
+    const updateUser = await this.fitUserModel.findByIdAndUpdate(id, item, {new: true});
     return updateUser;
   }
 

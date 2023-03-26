@@ -1,10 +1,11 @@
+import { UpdateFitUserDto } from './dto/update-fit-user.dto';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
 import { ResponseUserQuestionnare } from './../questionnaire/rdo/user-questionnare.rto';
 import { ResponseUserDto } from './../auth/rdo/response-user.dto';
 import { QuestionnaireRepository } from './../questionnaire/questionnaire.repository';
 import { FitUserRepository } from './fit-user.repository';
 import { FitUserEntity } from './fit-user-entity';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
 import { fillObject } from '@fit-friends/core';
 import { UserRole } from '@fit-friends/shared-types';
@@ -59,5 +60,15 @@ export class FitUserService {
         ...questinoObj
       }
     };
+  }
+
+  async update(id:string, dto: UpdateFitUserDto) {
+    const existUser = await this.fitUserRepository.findById(id);
+
+    if (existUser._id.toString() !== id) {
+      throw new BadRequestException('Editing is only possible for an authorized user')
+    }
+
+    return await this.fitUserRepository.update(id, dto);
   }
 }

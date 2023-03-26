@@ -6,8 +6,8 @@ Content-Type: application/json
 
 {
   "username": "FooBar",
-  "email": "13@mail.ru",
-  "avatar": "img.jpg",
+  "email": "1@mail.ru",
+  "avatar": "http://localhost:3338/api/fit-user/avatar/user-2023-03-27T00-43-48.jpg",
   "password": "1234567",
   "gender": "male",
   "dateBirth": "1981-03-12",
@@ -21,8 +21,19 @@ POST http://localhost:3338/api/auth/login HTTP/1.1
 Content-Type: application/json 
 
 {
-  "email": "2@mail.ru",
-  "password": "string"
+  "email": "1@mail.ru",
+  "password": "1234567"
+}
+###
+
+### Редактирование информации о пользователе
+PUT http://localhost:3338/api/fit-user/update HTTP/1.1
+Content-Type: application/json 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0MzI4MTJkNjhlYjBjNDBlNjUiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5ODY4MjQ3LCJleHAiOjE2Nzk4NjkxNDd9.906-kMsZA_eOvYZ2ZBiBmeTbI6mfdUV6Ylj1uqF0BQo
+
+{
+  "username": "John",
+  "gender": "male"
 }
 ###
 
