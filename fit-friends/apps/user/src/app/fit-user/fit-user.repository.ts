@@ -1,10 +1,10 @@
-import { UserModel } from './../user.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { FitUserEntity } from './fit-user-entity';
 import { CRUDRepository } from "@fit-friends/core";
 import { User } from '@fit-friends/shared-types';
 import { Model } from 'mongoose';
+import { UserModel } from './fit-user.model';
 
 @Injectable()
 export class FitUserRepository implements CRUDRepository<FitUserEntity, string, User> {
@@ -26,7 +26,7 @@ export class FitUserRepository implements CRUDRepository<FitUserEntity, string, 
     return await this.fitUserModel.findOne({email}).exec();
   }
 
-  public async create(item: FitUserEntity): Promise<User> {
+  public async create(item: FitUserEntity) {
     const userModel = new this.fitUserModel(item);
 
     return userModel.save();

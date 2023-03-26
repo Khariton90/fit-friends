@@ -1,4 +1,4 @@
-import { Gender, User, UserRole } from '@fit-friends/shared-types';
+import { Gender, User, UserRole, Location } from '@fit-friends/shared-types';
 import { genSalt, compare, hash } from 'bcrypt';
 
 const SALT_ROUNDS = 10;
@@ -12,7 +12,7 @@ export class FitUserEntity implements User {
   public gender: Gender;
   public dateBirth: Date;
   public role: UserRole;
-  public location: string;
+  public location: Location;
   public createdAt: Date;
 
   constructor(user: User) {

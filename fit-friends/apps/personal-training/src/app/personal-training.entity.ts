@@ -1,4 +1,5 @@
 import { PersonalTraining, PersonalTrainingStatus } from '@fit-friends/shared-types';
+
 export class PersonalTrainingEntity implements PersonalTraining {
   public _id?: string;
   public initiator: string;

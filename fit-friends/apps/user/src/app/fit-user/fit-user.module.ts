@@ -4,7 +4,7 @@ import { Module } from '@nestjs/common';
 import { FitUserService } from './fit-user.service';
 import { FitUserController } from './fit-user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { UserModel, UserSchema } from '../user.model';
+import { UserModel, UserSchema } from './fit-user.model';
 
 @Module({
   imports: [
@@ -12,7 +12,7 @@ import { UserModel, UserSchema } from '../user.model';
     {
       name: UserModel.name,
       schema: UserSchema,
-    },
+    }
   ]),
   QuestionnaireModule
 ],

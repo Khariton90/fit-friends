@@ -1,11 +1,11 @@
 import { FitUserRepository } from './../fit-user/fit-user.repository';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { LoginUserDto } from '../dto/login-user.dto';
 import { FitUserEntity } from '../fit-user/fit-user-entity';
 import { User } from '@fit-friends/shared-types';
 import { AuthRepository } from './auth.repository';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Injectable()
 export class AuthService {

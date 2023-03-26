@@ -1,5 +1,6 @@
 import { Gender } from './gender.enum';
 import { UserRole } from './user-role.enum';
+import { Location } from './location.enum';
 
 export interface User {
   _id?: string;
@@ -10,6 +11,6 @@ export interface User {
   gender: Gender;
   dateBirth: Date;
   role: UserRole;
-  location: string;
+  location: Location;
   createdAt: Date;
 }

@@ -1,0 +1,1 @@
+export const BASE_IMAGES_URL = 'http://localhost:3338/api/fit-user/avatar/';

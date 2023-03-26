@@ -1,12 +1,12 @@
-import { ExtendedUserRequest } from './../../../../../libs/shared-types/src/lib/extended-user-request.interface';
+import { ExtendedUserRequest } from '@fit-friends/shared-types';
 import { JwtAuthGuard } from './../guards/jwt-auth.guard';
 import { CheckMongoidValidationPipe } from './../../../../comment/src/pipes/check-mongo-id-validation-pipe';
 import { ResponseUserDto } from './rdo/response-user.dto';
-import { LoginUserDto } from './../dto/login-user.dto';
 import { Body, Controller, Get, Param, Post, UseGuards, Req } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { fillObject } from '@fit-friends/core';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('auth')
 export class AuthController {

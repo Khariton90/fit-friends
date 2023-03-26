@@ -1,10 +1,10 @@
-import { DetailedUserDto } from './../dto/detailed-user.dto';
+import { CreateFitUserDto } from './dto/create-fit-user.dto';
 import { ResponseUserQuestionnare } from './../questionnaire/rdo/user-questionnare.rto';
 import { ResponseUserDto } from './../auth/rdo/response-user.dto';
 import { QuestionnaireRepository } from './../questionnaire/questionnaire.repository';
 import { FitUserRepository } from './fit-user.repository';
 import { FitUserEntity } from './fit-user-entity';
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
 import { fillObject } from '@fit-friends/core';
 import { UserRole } from '@fit-friends/shared-types';
@@ -16,41 +16,22 @@ export class FitUserService {
     private readonly questionnaireRepository: QuestionnaireRepository,
   ) { }
 
-  async register(dto: DetailedUserDto) {
-    const {
-      username,
-      email,
-      avatar,
-      password,
-      gender,
-      role,
-      location,
-    } = dto;
+  async register(dto: CreateFitUserDto) {
+    const { username, email, avatar, password, gender, dateBirth, role, location } = dto;
+    const existUser = await this.fitUserRepository.findByEmail(email);
 
-    if (await this.fitUserRepository.findByEmail(email)) {
-      throw new ConflictException(409, 'User already exist');
+    if (existUser) {
+      throw new BadRequestException('User already exist')
     }
 
-    const user = { 
-      username, 
-      email, 
-      avatar, 
-      passwordHash: password, 
-      gender, 
-      dateBirth: dayjs().toDate(), 
-      role, 
-      location, 
-      createdAt: dayjs().toDate(),
-    };
-
-    const userEntity = await new FitUserEntity(user).setPassword(dto.password);
-    const newUser = await this.fitUserRepository.create(userEntity);
-    const userQuestion = await this.questionnaireRepository.create({...dto.question, userId: newUser._id});
-    
-    return {
-      newUser,
-      userQuestion
+    const fitUser = {
+      username, email, avatar, passwordHash: '', gender, dateBirth: dayjs(dateBirth).toDate(), role, location, createdAt: dayjs().toDate()
     }
+
+    const fitUserEntity = await new FitUserEntity(fitUser).setPassword(password);
+    const createFitUser = await this.fitUserRepository.create(fitUserEntity);
+
+    return createFitUser;
   }
 
   async find(role: string) {
