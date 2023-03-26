@@ -1,11 +1,11 @@
-import { Gender, Location, UserRole } from "@fit-friends/shared-types";
+import { CoachQuestion, UserQuestion, Gender, UserRole } from "@fit-friends/shared-types";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsEmail, Length, IsString } from 'class-validator';
+import { IsEmail, IsObject, IsString, Length } from 'class-validator';
 
 const MIN_LENGTH_USERNAME = 1;
 const MAX_LENGTH_USERNAME = 15;
 
-export class CreateUserDto {
+export class DetailedUserDto {
   @ApiProperty({
     description: 'Username',
     required: true,
@@ -48,7 +48,7 @@ export class CreateUserDto {
   gender: Gender;
 
   @ApiProperty({
-    description: 'User data birth',
+    description: 'User date birth',
     required: true,
     example: '2023-03-21T17:33:28.305Z'
   })
@@ -69,5 +69,17 @@ export class CreateUserDto {
     example: 'Пионерская'
   })
   @IsString()
-  location: Location;
+  location: string;
+
+  @ApiProperty({
+    description: 'User question',
+    required: true,
+    example: {
+      "dsdasdsad":" dsadasdsadad"
+    }
+  })
+  @IsObject()
+  question: CoachQuestion | UserQuestion
 }
+
+

@@ -5,7 +5,7 @@ import { getMongoDbConnectionString } from "@fit-friends/core";
 export function getMongoDbConfig(): MongooseModuleAsyncOptions {
   return {
     useFactory: async (configService: ConfigService) => {
-      const uria = getMongoDbConnectionString({
+      const uri = getMongoDbConnectionString({
         username: configService.get<string>('database.user'),
         password: configService.get<string>('database.password'),
         host: configService.get('database.host'),
@@ -14,9 +14,8 @@ export function getMongoDbConfig(): MongooseModuleAsyncOptions {
         authDatabase: configService.get('database.authBase'),
       });
 
-      console.log(uria);
       return {
-        uri: uria
+        uri: uri
       }
     },
     inject: [ConfigService]

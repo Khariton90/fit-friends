@@ -8,16 +8,16 @@ import { CreateTokenDto } from './dto/create-token.dto';
 export class AuthRepository {
   constructor(
     @InjectModel(AuthModel.name) private readonly authModel: Model<AuthModel>
-  ) {}
+  ) { }
 
   async find(refreshToken: string) {
-    const token = await this.authModel.findOne({refreshToken});
+    const token = await this.authModel.findOne({ refreshToken });
     return token;
   }
 
   async create(dto: CreateTokenDto) {
     const { userId } = dto;
-    const existToken = await this.authModel.findOne({userId});
+    const existToken = await this.authModel.findOne({ userId });
 
     if (!existToken) {
       const newToken = new this.authModel(dto);
@@ -29,5 +29,9 @@ export class AuthRepository {
 
   async destroy(id: string) {
     await this.authModel.findByIdAndDelete(id);
+  }
+
+  async update(dto: CreateTokenDto) {
+    await this.authModel.findOneAndUpdate({ refreshToken: dto.refreshToken }, dto);
   }
 }

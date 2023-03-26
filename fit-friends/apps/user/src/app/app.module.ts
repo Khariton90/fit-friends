@@ -10,6 +10,7 @@ import { FitUserModule } from './fit-user/fit-user.module';
 import databaseConfig from './config/database.config';
 import envSchema from './env.schema';
 import { jwtOptions } from './config/jwt.config';
+import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { jwtOptions } from './config/jwt.config';
     MongooseModule.forRootAsync(getMongoDbConfig()),
     AuthModule,
     FitUserModule,
+    QuestionnaireModule,
   ],
   controllers: [AppController],
   providers: [AppService],

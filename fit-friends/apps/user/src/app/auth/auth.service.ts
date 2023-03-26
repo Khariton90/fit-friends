@@ -5,6 +5,7 @@ import { LoginUserDto } from '../dto/login-user.dto';
 import { FitUserEntity } from '../fit-user/fit-user-entity';
 import { User } from '@fit-friends/shared-types';
 import { AuthRepository } from './auth.repository';
+import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @Injectable()
 export class AuthService {
@@ -33,7 +34,8 @@ export class AuthService {
   async login(user: User) {
     const payload = {
       sub: user._id.toString(),
-      email: user.email
+      email: user.email,
+      role: user.role,
     }
 
     const accessToken = await this.jwtService.signAsync(payload);
@@ -53,17 +55,20 @@ export class AuthService {
     };
   }
 
-  async refreshToken(refreshStr: string) {
-    const userSub = await this.retrieveRefreshToken(refreshStr);
+  async refreshToken(dto: RefreshTokenDto) {
+    const userSub = await this.retrieveRefreshToken(dto.refreshToken);
+
     if (!userSub) {
       return undefined;
     }
 
-    const user = await this.fitUserRepository.findById(userSub);
+    const token = await this.authRepository.find(dto.refreshToken);
 
-    if (!user) {
+    if (!token) {
       return undefined
     }
+
+    const user = await this.fitUserRepository.findById(userSub);
 
     const payload = {
       sub: user._id,
@@ -71,13 +76,15 @@ export class AuthService {
     }
 
     const accessToken = await this.jwtService.signAsync(payload);
-    const existUser = {
-      id: user._id, 
-      email: user.email, 
-      username: user.username, 
-      token: accessToken 
+    const refreshToken = await this.jwtService.signAsync(
+      payload,
+      { expiresIn: '7d' }
+    )
+
+    return {
+      access_token: accessToken,
+      refresh_token: refreshToken
     };
-    return existUser;
   }
 
   async retrieveRefreshToken(refreshToken: string): Promise<string | undefined> {
@@ -87,5 +94,11 @@ export class AuthService {
     } catch (e) {
       return undefined;
     }
+  }
+
+  async getUser(id: string) {
+    const existUser = await this.fitUserRepository.findById(id);
+
+    return existUser;
   }
 }

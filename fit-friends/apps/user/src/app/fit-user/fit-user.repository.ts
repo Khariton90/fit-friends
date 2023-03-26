@@ -12,8 +12,14 @@ export class FitUserRepository implements CRUDRepository<FitUserEntity, string, 
     @InjectModel(UserModel.name) private readonly fitUserModel: Model<UserModel>
   ) {}
 
-  public async findById(id: string): Promise<User | null> {
-    return await this.fitUserModel.findById(id);
+  public async find() {
+    const users = await this.fitUserModel.find();
+    return users;
+  }
+
+  public async findById(id: string) {
+    const user = await this.fitUserModel.findById(id);
+    return user;
   }
 
   public async findByEmail(email: string): Promise<User | null> {

@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CommentModel } from './comment.model';
 
-
 export class CommentRepository {
   constructor(
     @InjectModel(CommentModel.name) private readonly commentModel: Model<CommentModel>

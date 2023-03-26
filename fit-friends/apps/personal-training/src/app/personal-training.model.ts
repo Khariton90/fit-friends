@@ -1,12 +1,13 @@
 import { Document } from "mongoose";
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { PersonalTrainingStatus } from "@fit-friends/shared-types";
 
 @Schema({
   collection: 'personal-training',
   timestamps: true,
   versionKey: false
 })
-export class PersonalTrainingModel extends Document {
+export class PersonalTrainingModel extends Document implements PersonalTrainingModel {
   @Prop()
   initiator: string;
 
@@ -16,8 +17,14 @@ export class PersonalTrainingModel extends Document {
   @Prop()
   changeStatus: Date;
 
+  @Prop({
+    type: String,
+    enum: PersonalTrainingStatus
+  })
+  status: PersonalTrainingStatus;
+
   @Prop()
-  status: string;
+  createdAt: Date;
 }
 
 export const PersonalTrainingSchema = SchemaFactory.createForClass(PersonalTrainingModel);
