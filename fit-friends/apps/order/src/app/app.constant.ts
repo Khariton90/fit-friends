@@ -1,0 +1,1 @@
+export const ENV_FILE_ORDER_PATH = 'environments/.order.env';

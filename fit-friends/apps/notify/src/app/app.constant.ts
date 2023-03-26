@@ -1,0 +1,1 @@
+export const ENV_FILE_NOTIFY_PATH = 'environments/.notify.env';

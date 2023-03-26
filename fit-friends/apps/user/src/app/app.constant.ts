@@ -1,0 +1,1 @@
+export const ENV_FILE_USER_PATH = 'environments/.user.env';
