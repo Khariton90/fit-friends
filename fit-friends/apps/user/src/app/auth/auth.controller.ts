@@ -1,3 +1,4 @@
+import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './../guards/jwt-auth.guard';
 import { CheckMongoidValidationPipe } from './../../../../comment/src/pipes/check-mongo-id-validation-pipe';
 import { LoginUserRdo } from './rdo/login-user.rdo';
@@ -7,6 +8,7 @@ import { fillObject } from '@fit-friends/core';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 
+@ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   constructor(

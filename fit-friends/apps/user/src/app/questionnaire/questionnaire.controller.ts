@@ -1,7 +1,7 @@
 import { ApiTags } from '@nestjs/swagger';
 import { UserQuestionnareRdo } from './rdo/user-questionnare.rto';
 import { fillObject } from '@fit-friends/core';
-import { createQuestionnareDto } from './dto/create-questionnare.dto';
+import { CreateQuestionnareDto } from './dto/create-questionnare.dto';
 import { Body, Controller, Param, Post } from '@nestjs/common';
 import { QuestionnaireService } from './questionnaire.service';
 
@@ -13,7 +13,7 @@ export class QuestionnaireController {
   ) {}
 
   @Post('/:id')
-  async create(@Param('id') id: string, @Body() dto: createQuestionnareDto) {
+  async create(@Param('id') id: string, @Body() dto: CreateQuestionnareDto) {
     const question = await this.questionnaireService.findUserOrCreate(dto);
     return fillObject(UserQuestionnareRdo, question);
   }

@@ -1,25 +1,33 @@
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, MaxLength, Length, IsInt, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { TrainLevel, TypeTraining } from '@fit-friends/shared-types';
+import { ResetCalories, TYPE_TRAINING_MAX_LENGTH } from '../questionnaire.constant';
 
-export class createQuestionnareDto {
+export class CreateQuestionnareDto {
   @ApiProperty({
     description: 'Unique ID user',
     example:'64206f6018e913bbbd81cce2',
   })
   @IsNotEmpty()
+  @IsString()
   userId!: string;
 
   @ApiProperty({
     description: 'The level of training',
     example: 'newbie | amateur | pro',
+    enum: TrainLevel
   })
   @IsNotEmpty()
+  @IsEnum(TrainLevel)
   trainLevel: TrainLevel;
 
   @ApiProperty({
     description: 'Type of training from the list',
-    example: 'yoga | boxing | running',
+    example: ['yoga', 'boxing', 'unning'],
+    enum: TypeTraining
+  })
+  @MaxLength(TYPE_TRAINING_MAX_LENGTH, {
+    each: true
   })
   @IsNotEmpty()
   typesTraining: TypeTraining[];
@@ -29,13 +37,16 @@ export class createQuestionnareDto {
     example: 30,
   })
   @IsNotEmpty()
+  @Min(10)
   timeTraining: number;
 
   @ApiProperty({
     description: 'Number of calories for reset',
-    example: 400,
+    example: 1000,
   })
   @IsNotEmpty()
+  @IsInt()
+  @Length(ResetCalories.Min, ResetCalories.Max)
   resetCalories: number;
 
   @ApiProperty({
@@ -43,6 +54,8 @@ export class createQuestionnareDto {
     example: 2000,
   })
   @IsNotEmpty()
+  @IsInt()
+  @Length(ResetCalories.Min, ResetCalories.Max)
   spendCaloriesPerDay: number;
 
   @ApiProperty({

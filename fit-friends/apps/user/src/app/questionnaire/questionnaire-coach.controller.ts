@@ -3,7 +3,7 @@ import { fillObject } from '@fit-friends/core';
 import { Body, Controller, Param, Post } from '@nestjs/common';
 import { QuestionnaireService } from './questionnaire.service';
 import { CoachQuestionnareRdo } from './rdo/coach-questionnare.rto';
-import { createCoachQuestionnareDto } from './dto/create-coach-questionnare.dto';
+import { CreateCoachQuestionnareDto } from './dto/create-coach-questionnare.dto';
 
 @ApiTags('The questionnaire of coach')
 @Controller('questionnaire-coach')
@@ -13,7 +13,7 @@ export class QuestionnaireCoachController {
   ) {}
 
   @Post('/:id')
-  async create(@Param('id') id: string, @Body() dto: createCoachQuestionnareDto) {
+  async create(@Param('id') id: string, @Body() dto: CreateCoachQuestionnareDto) {
     const question = await this.questionnaireService.findCoachOrCreate(dto);
     return fillObject(CoachQuestionnareRdo, question);
   }

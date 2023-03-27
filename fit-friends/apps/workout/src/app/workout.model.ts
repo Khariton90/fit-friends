@@ -47,7 +47,9 @@ export class WorkoutModel extends Document implements Workout {
   @Prop()
   movie: string;
 
-  @Prop()
+  @Prop({
+    default: 0
+  })
   rating: number;
 
   @Prop()

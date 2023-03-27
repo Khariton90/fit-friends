@@ -1,8 +1,10 @@
+import { MeritCoachLineLength } from './../questionnaire.constant';
 import { ApiProperty } from '@nestjs/swagger';
 import { TrainLevel, TypeTraining } from '@fit-friends/shared-types';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, Length, MaxLength } from 'class-validator';
+import { TYPE_TRAINING_MAX_LENGTH } from '../questionnaire.constant';
 
-export class createCoachQuestionnareDto {
+export class CreateCoachQuestionnareDto {
   @ApiProperty({
     description: 'Unique ID user',
     example:'64206f6018e913bbbd81cce2',
@@ -19,14 +21,17 @@ export class createCoachQuestionnareDto {
 
   @ApiProperty({
     description: 'Type of training from the list',
-    example: 'yoga | boxing | running',
+    example: ['yoga', 'boxing', 'running'],
+  })
+  @MaxLength(TYPE_TRAINING_MAX_LENGTH, {
+    each: true
   })
   @IsNotEmpty()
   typesTraining: TypeTraining[];
 
   @ApiProperty({
     description: 'Coach sertificates',
-    example: 'http://localhost:3338/api/setificates/1.jpg',
+    example: 'http://localhost:3338/api/setificates/1.pdf',
   })
   @IsNotEmpty()
   sertificates: string;
@@ -36,6 +41,7 @@ export class createCoachQuestionnareDto {
     example: 'Long work coach for 40 years',
   })
   @IsNotEmpty()
+  @Length(MeritCoachLineLength.Min, MeritCoachLineLength.Max)
   merits: string;
 
   @ApiProperty({

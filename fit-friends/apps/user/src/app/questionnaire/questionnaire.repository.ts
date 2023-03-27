@@ -1,10 +1,10 @@
-import { createQuestionnareDto } from './dto/create-questionnare.dto';
+import { CreateQuestionnareDto } from './dto/create-questionnare.dto';
 import { QuestionnaireModel } from './questionnaire.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { QuestionnaireCoachModel } from './questionnaire-coach.model';
-import { createCoachQuestionnareDto } from './dto/create-coach-questionnare.dto';
+import { CreateCoachQuestionnareDto } from './dto/create-coach-questionnare.dto';
 
 @Injectable()
 export class QuestionnaireRepository {
@@ -23,12 +23,12 @@ export class QuestionnaireRepository {
     return existQuestion;
   }
 
-  async createUser(dto: createQuestionnareDto) {
+  async createUser(dto: CreateQuestionnareDto) {
     const newQuestion = await this.questionnaireModel.create(dto);
     return newQuestion.save();
   }
 
-  async createCoach(dto: createCoachQuestionnareDto) {
+  async createCoach(dto: CreateCoachQuestionnareDto) {
     const newQuestion = await this.questionnaireCoachModel.create(dto);
     return newQuestion.save();
   }
