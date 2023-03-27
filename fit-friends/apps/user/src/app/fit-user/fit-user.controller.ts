@@ -2,7 +2,6 @@ import { FitUserRdo } from './rdo/fit-user.rdo';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
 import { ExtendedUserRequest } from '@fit-friends/shared-types';
 import { ApiTags } from '@nestjs/swagger';
-import { LoginUserRdo } from '../auth/rdo/login-user.rdo';
 import { fillObject } from '@fit-friends/core';
 import { FitUserService } from './fit-user.service';
 import { Controller, Post, Body, UseGuards, Get, Param, Req, UseInterceptors, UploadedFile, Res, BadRequestException, Put } from '@nestjs/common';
@@ -36,7 +35,7 @@ export class FitUserController {
   @Get('list')
   async show(@Req() req: ExtendedUserRequest) {
     const users = await this.fitUserService.find(req.user.role);
-    return fillObject(LoginUserRdo, users);
+    return fillObject(FitUserRdo, users);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -44,12 +43,12 @@ export class FitUserController {
   async findById(@Param('id', CheckMongoidValidationPipe) id: string) {
 
     const user = await this.fitUserService.findById(id);
-    return fillObject(FitUserRdo, user);
+    return user;
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put('/update')
-  async update(@Body() dto: UpdateFitUserDto, @Req() req: ExtendedUserRequest) {
+  @Put('/update/:id')
+  async update(@Param('id', CheckMongoidValidationPipe) id: string, @Body() dto: UpdateFitUserDto, @Req() req: ExtendedUserRequest) {
     const updateUser = await this.fitUserService.update(req.user.sub, dto);
     return fillObject(FitUserRdo, updateUser);
   }

@@ -1,14 +1,15 @@
+import { UserQuestionnareRdo } from './../questionnaire/rdo/user-questionnare.rto';
+import { FitUserRdo } from './rdo/fit-user.rdo';
+import { fillObject } from '@fit-friends/core';
 import { UpdateFitUserDto } from './dto/update-fit-user.dto';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
-import { ResponseUserQuestionnare } from './../questionnaire/rdo/user-questionnare.rto';
-import { LoginUserRdo } from '../auth/rdo/login-user.rdo';
 import { QuestionnaireRepository } from './../questionnaire/questionnaire.repository';
 import { FitUserRepository } from './fit-user.repository';
 import { FitUserEntity } from './fit-user-entity';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
-import { fillObject } from '@fit-friends/core';
 import { UserRole } from '@fit-friends/shared-types';
+import { CoachQuestionnareRdo } from '../questionnaire/rdo/coach-questionnare.rto';
 
 @Injectable()
 export class FitUserService {
@@ -45,21 +46,35 @@ export class FitUserService {
 
   async findById(id: string) {
     const user = await this.fitUserRepository.findById(id);
-    const question = await this.questionnaireRepository.find(id);
 
     if (!user) {
-      throw new NotFoundException(404, 'User not found');
+      throw new NotFoundException('There is no user with such ID')
     }
 
-    const userObj = fillObject(LoginUserRdo, user);
-    const questinoObj = fillObject(ResponseUserQuestionnare, question);
-
-    return {
-      ...userObj,
-      question: {
-        ...questinoObj
+    if (user.role === UserRole.User) {
+      const question = await this.questionnaireRepository.findUser(id);
+      const userValue = fillObject(FitUserRdo, user);
+      const questionValue = fillObject(UserQuestionnareRdo, question);
+  
+      return {
+        ...userValue,
+        question: {
+          ...questionValue
+        }
       }
-    };
+    } else {
+      const question = await this.questionnaireRepository.findCoach(id);
+      const userValue = fillObject(FitUserRdo, user);
+      const questionValue = fillObject(CoachQuestionnareRdo, question);
+      return {
+        ...userValue,
+        question: {
+          ...questionValue
+        }
+      }
+    }
+
+
   }
 
   async update(id:string, dto: UpdateFitUserDto) {

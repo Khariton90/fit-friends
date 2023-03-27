@@ -1,6 +1,6 @@
 import { Gender, UserRole, Location } from '@fit-friends/shared-types';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsEmail, IsEnum, IsISO8601 } from 'class-validator';
+import { IsString, IsEmail, IsEnum, IsISO8601, IsNotEmpty } from 'class-validator';
 
 export class CreateFitUserDto {
   @ApiProperty({
@@ -8,6 +8,7 @@ export class CreateFitUserDto {
     example: 'John'
   })
   @IsString()
+  @IsNotEmpty()
   username: string;
 
   @ApiProperty({
@@ -15,6 +16,7 @@ export class CreateFitUserDto {
     example: 'john@gmail.com'
   })
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
   @ApiProperty({
@@ -22,6 +24,7 @@ export class CreateFitUserDto {
     example: 'http://localhost:3338/api/fit-user/avatar/user-2023-03-27T00-34-33.jpg'
   })
   @IsString()
+  @IsNotEmpty()
   avatar: string;
 
   @ApiProperty({
@@ -29,6 +32,7 @@ export class CreateFitUserDto {
     example: '123456'
   })
   @IsString()
+  @IsNotEmpty()
   password: string;
 
   @ApiProperty({
@@ -36,6 +40,7 @@ export class CreateFitUserDto {
     example: 'male | female | never'
   })
   @IsEnum(Gender)
+  @IsNotEmpty()
   gender: Gender;
 
   @ApiProperty({
@@ -43,6 +48,7 @@ export class CreateFitUserDto {
     example: '1981-03-12',
   })
   @IsISO8601()
+  @IsNotEmpty()
   dateBirth: Date;
 
   @ApiProperty({
@@ -50,6 +56,7 @@ export class CreateFitUserDto {
     example: 'coach | user',
   })
   @IsEnum(UserRole)
+  @IsNotEmpty()
   role: UserRole;
 
   @ApiProperty({
@@ -57,5 +64,6 @@ export class CreateFitUserDto {
     example: 'Пионерская | Петроградская | Удельная | Звездная | Спортивная',
   })
   @IsEnum(Location)
+  @IsNotEmpty()
   location: Location;
 }

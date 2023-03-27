@@ -1,3 +1,4 @@
+import { QuestionnaireModel } from './../questionnaire/questionnaire.model';
 import { UpdateFitUserDto } from './dto/update-fit-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
@@ -10,7 +11,8 @@ import { UserModel } from './fit-user.model';
 @Injectable()
 export class FitUserRepository implements CRUDRepository<FitUserEntity, string, User> {
   constructor(
-    @InjectModel(UserModel.name) private readonly fitUserModel: Model<UserModel>
+    @InjectModel(UserModel.name) private readonly fitUserModel: Model<UserModel>,
+    @InjectModel(QuestionnaireModel.name) private readonly questionnaireModel: Model<QuestionnaireModel>
   ) {}
 
   public async find() {

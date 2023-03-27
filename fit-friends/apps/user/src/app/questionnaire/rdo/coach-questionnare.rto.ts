@@ -1,6 +1,6 @@
 import { Exclude, Expose } from "class-transformer";
 
-export class UserQuestionnareRdo {
+export class CoachQuestionnareRdo {
   @Exclude()
   userId: string;
 
@@ -11,14 +11,11 @@ export class UserQuestionnareRdo {
   typesTraining: [];
 
   @Expose()
-  timeTraining: number;
+  sertificates: string;
 
   @Expose()
-  resetCalories: number;
+  merits: string;
 
   @Expose()
-  spendCaloriesPerDay: number;
-  
-  @Expose()
-  readTrainig: boolean;
+  personalTraining: boolean;
 }

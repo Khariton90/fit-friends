@@ -1,3 +1,4 @@
+import { createCoachQuestionnareDto } from './dto/create-coach-questionnare.dto';
 import { QuestionnaireRepository } from './questionnaire.repository';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { createQuestionnareDto } from './dto/create-questionnare.dto';
@@ -8,13 +9,23 @@ export class QuestionnaireService {
     private readonly questionnaireRepository: QuestionnaireRepository,
   ) { }
 
-  async findOrCreate(dto: createQuestionnareDto) {
-    const existQuestion = await this.questionnaireRepository.find(dto.userId);
+  async findUserOrCreate(dto: createQuestionnareDto) {
+    const existQuestion = await this.questionnaireRepository.findUser(dto.userId);
 
-    if (existQuestion) {
-      throw new ConflictException();
+    if (!existQuestion) {
+      return await this.questionnaireRepository.createUser(dto);
     }
 
-    return await this.questionnaireRepository.create(dto);
+    throw new ConflictException('Description for this user already exists');
+  }
+
+  async findCoachOrCreate(dto: createCoachQuestionnareDto) {
+    const existQuestion = await this.questionnaireRepository.findCoach(dto.userId);
+
+    if (!existQuestion) {
+      return await this.questionnaireRepository.createCoach(dto);
+    }
+
+    throw new ConflictException('Description for this coach already exists');
   }
 }

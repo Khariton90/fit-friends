@@ -1,14 +1,14 @@
-import { IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { TrainLevel, TypeTraining } from '@fit-friends/shared-types';
+import { IsNotEmpty } from 'class-validator';
 
-export class createQuestionnareDto {
+export class createCoachQuestionnareDto {
   @ApiProperty({
     description: 'Unique ID user',
     example:'64206f6018e913bbbd81cce2',
   })
   @IsNotEmpty()
-  userId!: string;
+  userId: string;
 
   @ApiProperty({
     description: 'The level of training',
@@ -25,30 +25,23 @@ export class createQuestionnareDto {
   typesTraining: TypeTraining[];
 
   @ApiProperty({
-    description: 'Training time for training',
-    example: 30,
+    description: 'Coach sertificates',
+    example: 'http://localhost:3338/api/setificates/1.jpg',
   })
   @IsNotEmpty()
-  timeTraining: number;
+  sertificates: string;
 
   @ApiProperty({
-    description: 'Number of calories for reset',
-    example: 400,
+    description: 'Merit of the coach',
+    example: 'Long work coach for 40 years',
   })
   @IsNotEmpty()
-  resetCalories: number;
+  merits: string;
 
   @ApiProperty({
-    description: 'Number of calories for reset per day',
-    example: 2000,
+    description: 'Readiness for personal training',
+    example: 'true | false',
   })
   @IsNotEmpty()
-  spendCaloriesPerDay: number;
-
-  @ApiProperty({
-    description: 'Readiness for training',
-    example: "true || false",
-  })
-  @IsNotEmpty()
-  readTrainig: boolean;
+  personalTraining: boolean;
 }

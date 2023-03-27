@@ -4,6 +4,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { QuestionnaireController } from './questionnaire.controller';
 import { QuestionnaireService } from './questionnaire.service';
 import { QuestionnaireRepository } from './questionnaire.repository';
+import { QuestionnaireCoachModel, QuestionnaireCoachModelSchema } from './questionnaire-coach.model';
+import { QuestionnaireCoachController } from './questionnaire-coach.controller';
 
 @Module({
   imports: [
@@ -12,9 +14,13 @@ import { QuestionnaireRepository } from './questionnaire.repository';
         name: QuestionnaireModel.name,
         schema: QuestionnaireModelSchema,
       },
+      {
+        name: QuestionnaireCoachModel.name,
+        schema: QuestionnaireCoachModelSchema,
+      },
     ]),
   ],
-  controllers: [QuestionnaireController],
+  controllers: [QuestionnaireController, QuestionnaireCoachController],
   providers: [QuestionnaireService, QuestionnaireRepository],
   exports: [QuestionnaireService, QuestionnaireRepository]
 })

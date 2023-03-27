@@ -3,7 +3,7 @@ import { TypeTraining } from './type-training.enum';
 
 export interface UserQuestion {
   trainLevel: TrainLevel,
-  typesTraining: [],
+  typesTraining: TypeTraining[],
   timeTraining: number,
   resetCalories: number,
   spendCaloriesPerDay: number,

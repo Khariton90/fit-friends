@@ -1,13 +1,13 @@
-import { TrainLevel, TypeTraining, UserQuestion } from '@fit-friends/shared-types';
+import { CoachQuestion, TrainLevel, TypeTraining } from '@fit-friends/shared-types';
 import { Document } from "mongoose";
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
-  collection: 'questionnaire',
+  collection: 'questionnaire-coach',
   timestamps: true,
   versionKey: false
 })
-export class QuestionnaireModel extends Document implements UserQuestion {
+export class QuestionnaireCoachModel extends Document implements CoachQuestion {
   @Prop({
     required: true
   })
@@ -26,16 +26,13 @@ export class QuestionnaireModel extends Document implements UserQuestion {
   typesTraining: TypeTraining[];
 
   @Prop()
-  timeTraining: number;
+  sertificates: string;
 
   @Prop()
-  resetCalories: number;
+  merits: string;
 
   @Prop()
-  spendCaloriesPerDay: number;
-
-  @Prop()
-  readTrainig: boolean;
+  personalTraining: boolean;
 }
 
-export const QuestionnaireModelSchema = SchemaFactory.createForClass(QuestionnaireModel);
+export const QuestionnaireCoachModelSchema = SchemaFactory.createForClass(QuestionnaireCoachModel);
