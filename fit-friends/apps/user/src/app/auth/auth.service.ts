@@ -50,8 +50,9 @@ export class AuthService {
     });
 
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken
+      id: payload.sub,
+      email: payload.email,
+      accessToken
     };
   }
 

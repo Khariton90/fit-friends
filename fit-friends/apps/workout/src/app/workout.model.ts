@@ -1,23 +1,30 @@
 import { Document } from "mongoose";
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Gender, TrainLevel, TypeTraining, Workout } from "@fit-friends/shared-types";
 
 @Schema({
   collection: 'workout',
   timestamps: true,
   versionKey: false
 })
-export class WorkoutModel extends Document {
+export class WorkoutModel extends Document implements Workout {
   @Prop()
   title: string;
 
   @Prop()
   image: string;
 
-  @Prop()
-  trainLevel: string;
+  @Prop({
+    type: String,
+    enum: TrainLevel
+  })
+  trainLevel: TrainLevel;
 
-  @Prop()
-  typeTraining: string;
+  @Prop({
+    type: String,
+    enum: TypeTraining
+  })
+  typeTraining: TypeTraining;
 
   @Prop()
   timeTraining: number;
@@ -31,8 +38,11 @@ export class WorkoutModel extends Document {
   @Prop()
   description: string;
 
-  @Prop()
-  gender: string;
+  @Prop({
+    type: String,
+    enum: Gender
+  })
+  gender: Gender;
 
   @Prop()
   movie: string;

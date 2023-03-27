@@ -1,11 +1,11 @@
 import { UpdateFitUserDto } from './dto/update-fit-user.dto';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
 import { ResponseUserQuestionnare } from './../questionnaire/rdo/user-questionnare.rto';
-import { ResponseUserDto } from './../auth/rdo/response-user.dto';
+import { LoginUserRdo } from '../auth/rdo/login-user.rdo';
 import { QuestionnaireRepository } from './../questionnaire/questionnaire.repository';
 import { FitUserRepository } from './fit-user.repository';
 import { FitUserEntity } from './fit-user-entity';
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
 import { fillObject } from '@fit-friends/core';
 import { UserRole } from '@fit-friends/shared-types';
@@ -51,7 +51,7 @@ export class FitUserService {
       throw new NotFoundException(404, 'User not found');
     }
 
-    const userObj = fillObject(ResponseUserDto, user);
+    const userObj = fillObject(LoginUserRdo, user);
     const questinoObj = fillObject(ResponseUserQuestionnare, question);
 
     return {

@@ -2,7 +2,7 @@ import { FitUserRdo } from './rdo/fit-user.rdo';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
 import { ExtendedUserRequest } from '@fit-friends/shared-types';
 import { ApiTags } from '@nestjs/swagger';
-import { ResponseUserDto } from './../auth/rdo/response-user.dto';
+import { LoginUserRdo } from '../auth/rdo/login-user.rdo';
 import { fillObject } from '@fit-friends/core';
 import { FitUserService } from './fit-user.service';
 import { Controller, Post, Body, UseGuards, Get, Param, Req, UseInterceptors, UploadedFile, Res, BadRequestException, Put } from '@nestjs/common';
@@ -26,9 +26,7 @@ export class FitUserController {
   ) { }
 
   @Post('register')
-  async create(
-    @Body() dto: CreateFitUserDto
-  ) {
+  async create(@Body() dto: CreateFitUserDto) {
     const newUser = await this.fitUserService.register(dto);
 
     return fillObject(FitUserRdo, newUser);
@@ -38,7 +36,7 @@ export class FitUserController {
   @Get('list')
   async show(@Req() req: ExtendedUserRequest) {
     const users = await this.fitUserService.find(req.user.role);
-    return fillObject(ResponseUserDto, users);
+    return fillObject(LoginUserRdo, users);
   }
 
   @UseGuards(JwtAuthGuard)
