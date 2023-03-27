@@ -3,15 +3,16 @@
 ### Регистрация пользователя
 POST http://localhost:3338/api/fit-user/register HTTP/1.1
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0MzI4MTJkNjhlYjBjNDBlNjUiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5ODY5NDk0LCJleHAiOjE2Nzk4NzAzOTR9.Y05YWg6GcyEbFk5F6beijL6Q_uIxPeDX2kHLSlYRwLc
 
 {
   "username": "FooBar",
-  "email": "1@mail.ru",
+  "email": "3@mail.ru",
   "avatar": "http://localhost:3338/api/fit-user/avatar/user-2023-03-27T00-43-48.jpg",
   "password": "1234567",
   "gender": "male",
   "dateBirth": "1981-03-12",
-  "role": "user",
+  "role": "coach",
   "location": "Пионерская"
 }
 ###
@@ -21,7 +22,7 @@ POST http://localhost:3338/api/auth/login HTTP/1.1
 Content-Type: application/json 
 
 {
-  "email": "1@mail.ru",
+  "email": "2@mail.ru",
   "password": "1234567"
 }
 ###
@@ -35,6 +36,12 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0M
   "username": "John",
   "gender": "male"
 }
+###
+
+
+### Список пользователей
+GET http://localhost:3338/api/fit-user/list HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0MzI4MTJkNjhlYjBjNDBlNjUiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5ODY4MjQ3LCJleHAiOjE2Nzk4NjkxNDd9.906-kMsZA_eOvYZ2ZBiBmeTbI6mfdUV6Ylj1uqF0BQo
 ###
 
 ### Детальная информация о пользователе
@@ -70,8 +77,5 @@ Content-Type: application/json
 }
 ###
 
-### Список пользователей
-GET http://localhost:3338/api/fit-user/list HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFlY2FkYTZjYzkzZGYxOWRlZDMyYjIiLCJlbWFpbCI6IjJAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTc3MTIwOCwiZXhwIjoxNjc5NzcyMTA4fQ.8tvP2L4pGWbPrTPPfSHLCoJiOi_xOPIuh2_OE0fNd4w
-###
+
 
