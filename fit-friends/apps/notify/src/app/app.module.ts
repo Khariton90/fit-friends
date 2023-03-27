@@ -7,23 +7,23 @@ import databaseConfig from './config/database.config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig } from './config/mongodb.config';
 import { NotifyModel, NotifySchema } from './notify.model';
+import { EmailSubscriberModule } from './email-subscriber/email-subscriber.module';
 import envSchema from './env.schema';
 
 @Module({
-  imports: [   
+  imports: [
     ConfigModule.forRoot({
-    cache: true,
-    isGlobal: true,
-    envFilePath: ENV_FILE_NOTIFY_PATH,
-    load: [databaseConfig],
-    validationSchema: envSchema,
-  }),
-    MongooseModule.forRootAsync(
-      getMongoDbConfig(),
-    ),
+      cache: true,
+      isGlobal: true,
+      envFilePath: ENV_FILE_NOTIFY_PATH,
+      load: [databaseConfig],
+      validationSchema: envSchema,
+    }),
+    MongooseModule.forRootAsync(getMongoDbConfig()),
     MongooseModule.forFeature([
-      { name: NotifyModel.name, schema: NotifySchema  }
-    ])
+      { name: NotifyModel.name, schema: NotifySchema },
+    ]),
+    EmailSubscriberModule,
   ],
   controllers: [AppController],
   providers: [AppService],
