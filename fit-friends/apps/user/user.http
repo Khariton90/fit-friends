@@ -17,20 +17,53 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0M
 }
 ###
 
+
+### Опросник пользователя
+POST http://localhost:3338/api/questionnaire/6420ca54ac103330b69a1709 HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": "6420ca54ac103330b69a1709",
+  "trainLevel": "newbie",
+  "typesTraining": "yoga",
+  "timeTraining": 30,
+  "resetCalories": 400,
+  "spendCaloriesPerDay": 2000,
+  "readTrainig": true
+}
+###
+
+
+### Опросник тренера
+POST http://localhost:3338/api/questionnaire-coach/6420d9a5ae38867a78496793 HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": "6420d9a5ae38867a78496793",
+  "trainLevel": "newbie",
+  "typesTraining": "yoga",
+  "sertificates": "http://localhost:3338/api/setificates/1.jpg",
+  "merits": "Long work coach for 40 years",
+  "personalTraining": true
+}
+###
+
+
 ### Вход в систему
 POST http://localhost:3338/api/auth/login HTTP/1.1
 Content-Type: application/json 
 
 {
-  "email": "2@mail.ru",
+  "email": "1@mail.ru",
   "password": "1234567"
 }
 ###
 
+
 ### Редактирование информации о пользователе
-PUT http://localhost:3338/api/fit-user/update HTTP/1.1
+PUT http://localhost:3338/api/fit-user/update/6420ca54ac103330b69a1709 HTTP/1.1
 Content-Type: application/json 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0MzI4MTJkNjhlYjBjNDBlNjUiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5ODY4MjQ3LCJleHAiOjE2Nzk4NjkxNDd9.906-kMsZA_eOvYZ2ZBiBmeTbI6mfdUV6Ylj1uqF0BQo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwY2E1NGFjMTAzMzMwYjY5YTE3MDkiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5OTM2MjIwLCJleHAiOjE2Nzk5MzcxMjB9._uE6vmkqH7esNuwye2rBZe9_W69JPwYGzdkjJ9LefuY
 
 {
   "username": "John",
@@ -41,8 +74,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0M
 
 ### Список пользователей
 GET http://localhost:3338/api/fit-user/list HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0MzI4MTJkNjhlYjBjNDBlNjUiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5ODY4MjQ3LCJleHAiOjE2Nzk4NjkxNDd9.906-kMsZA_eOvYZ2ZBiBmeTbI6mfdUV6Ylj1uqF0BQo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwY2E1NGFjMTAzMzMwYjY5YTE3MDkiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5OTM1ODQ0LCJleHAiOjE2Nzk5MzY3NDR9.7bK5FNRmSGFkIYJHSd-yQXcxDC0hEsVw_wsUuI09b94
 ###
+
 
 ### Детальная информация о пользователе
 GET http://localhost:3338/api/fit-user/641a0c58343b53f027046706
@@ -56,24 +90,6 @@ Content-Type: application/json
 
 {
   "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMGM1ODM0M2I1M2YwMjcwNDY3MDYiLCJlbWFpbCI6IjFAbWFpbC5ydSIsImlhdCI6MTY3OTQyODc1NSwiZXhwIjoxNjgwMDMzNTU1fQ.YUHl3onjwYplzv0vy1Mqzx4VdWshNeNkolyYD39uHlE"
-}
-###
-
-### Опросник пользователя
-POST http://localhost:3338/api/questionnaire HTTP/1.1
-Content-Type: application/json 
-
-{
-  "userId": "641a0c58343b53f027046706",
-  "trainLevel": "string;",
-  "typesTraining": ["dsasd", "dasdsda"],
-  "timeTraining": 2,
-  "resetCalories": 2,
-  "spendCaloriesPerDay": 2,
-  "readTrainig": false,
-  "sertificates": "string",
-  "merits": "string",
-  "personalTraining": false
 }
 ###
 
