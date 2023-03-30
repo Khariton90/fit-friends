@@ -1,6 +1,6 @@
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './../guards/jwt-auth.guard';
-import { CheckMongoidValidationPipe } from './../../../../comment/src/pipes/check-mongo-id-validation-pipe';
+import { CheckMongoidValidationPipe } from '@fit-friends/core';
 import { LoginUserRdo } from './rdo/login-user.rdo';
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
@@ -18,7 +18,6 @@ export class AuthController {
   @Post('verify')
   async verifyUser(@Body() dto: LoginUserDto) {
     const user = await this.authService.authorization(dto);
-
     return fillObject(LoginUserRdo, user);
   }
 

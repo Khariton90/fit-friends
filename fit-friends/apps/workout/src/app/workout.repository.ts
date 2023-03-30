@@ -15,8 +15,17 @@ export class WorkoutRepository implements CRUDRepository<WorkoutEntity, string, 
 
   async create(item: WorkoutEntity): Promise<Workout> {
     const newWorkout = new this.workoutModel(item);
-
     return newWorkout.save();
+  }
+
+  async find(id: string): Promise<Workout[] | []> {
+    const workoutList = await this.workoutModel.find({coach: id});
+    return workoutList;
+  }
+
+  async findById(id: string): Promise<Workout | null> {
+    const existWorkout = await this.workoutModel.findOne({id});
+    return existWorkout;
   }
 
   async update(id: string, item: UpdateWorkoutDto): Promise<Workout> {
@@ -24,12 +33,7 @@ export class WorkoutRepository implements CRUDRepository<WorkoutEntity, string, 
     return updateWorkout;
   }
 
-  async findById(id: string): Promise<Workout | null> {
-    const existWorkout = await this.workoutModel.findById(id);
-    return existWorkout;
-  }
-
-  destroy(id: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async destroy(id: string): Promise<void> {
+   await this.workoutModel.findByIdAndDelete(id);
   }
 }

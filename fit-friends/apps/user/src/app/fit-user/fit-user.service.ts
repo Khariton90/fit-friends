@@ -73,8 +73,6 @@ export class FitUserService {
         }
       }
     }
-
-
   }
 
   async update(id:string, dto: UpdateFitUserDto) {

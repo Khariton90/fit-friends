@@ -77,14 +77,11 @@ export class AuthService {
     }
 
     const accessToken = await this.jwtService.signAsync(payload);
-    const refreshToken = await this.jwtService.signAsync(
-      payload,
-      { expiresIn: '7d' }
-    )
-
+    
     return {
-      access_token: accessToken,
-      refresh_token: refreshToken
+      id: payload.sub,
+      email: payload.email,
+      accessToken
     };
   }
 
@@ -99,7 +96,6 @@ export class AuthService {
 
   async getUser(id: string) {
     const existUser = await this.fitUserRepository.findById(id);
-
     return existUser;
   }
 }

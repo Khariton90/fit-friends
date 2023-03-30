@@ -6,7 +6,7 @@ import { fillObject } from '@fit-friends/core';
 import { FitUserService } from './fit-user.service';
 import { Controller, Post, Body, UseGuards, Get, Param, Req, UseInterceptors, UploadedFile, Res, BadRequestException, Put } from '@nestjs/common';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
-import { CheckMongoidValidationPipe } from 'apps/comment/src/pipes/check-mongo-id-validation-pipe';
+import { CheckMongoidValidationPipe } from '@fit-friends/core';
 import { FileInterceptor } from '@nestjs/platform-express';
 import dayjs from 'dayjs';
 import { BASE_IMAGES_URL } from './fit-user.constant';
