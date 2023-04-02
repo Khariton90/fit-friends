@@ -15,14 +15,6 @@ export class CreateWorkoutDto {
   title: string;
 
   @ApiProperty({
-    description: 'Url image workout',
-    example: 'http://localhost:3339/api/workout/pictures/workout-2023-03-27T00-34-33.jpg'
-  })
-  @IsString()
-  @IsNotEmpty()
-  image: string;
-
-  @ApiProperty({
     description: 'Workout train level',
     example: 'newbie | amateur | pro'
   })

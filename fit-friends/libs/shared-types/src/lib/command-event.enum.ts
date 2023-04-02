@@ -1,5 +1,5 @@
 export enum CommandEvent {
-  AddUser = 'addUser',
-  AddSubscriber = 'addSubscriber',
-  AddPurchase = 'addPurchase'
+  AddUser = 'adduser',
+  AddSubscriber = 'addsubscriber',
+  AddPurchase = 'addpurchase'
 }

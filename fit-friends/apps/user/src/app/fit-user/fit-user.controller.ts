@@ -1,8 +1,8 @@
 import { FitUserRdo } from './rdo/fit-user.rdo';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
-import { ExtendedUserRequest } from '@fit-friends/shared-types';
+import { CommandEvent, ExtendedUserRequest } from '@fit-friends/shared-types';
 import { ApiTags } from '@nestjs/swagger';
-import { fillObject } from '@fit-friends/core';
+import { createEvent, fillObject } from '@fit-friends/core';
 import { FitUserService } from './fit-user.service';
 import { 
   Controller, 
@@ -26,6 +26,7 @@ import { BASE_IMAGES_URL } from './fit-user.constant';
 import { Express } from 'express';
 import { diskStorage } from 'multer';
 import { UpdateFitUserDto } from './dto/update-fit-user.dto';
+import { EventPattern } from '@nestjs/microservices';
 
 type File = Express.Multer.File;
 
@@ -96,5 +97,10 @@ export class FitUserController {
 
     const response = `${BASE_IMAGES_URL}${file.filename}`
     return response;
+  }
+
+  @EventPattern(createEvent(CommandEvent.AddPurchase))
+  async getSubscriber(subscriber: {id: string, date: Date}) {
+    await this.fitUserService.findSubscriber(subscriber.id, subscriber.date);
   }
 }

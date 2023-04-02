@@ -18,33 +18,32 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0M
 ###
 
 
-### Опросник пользователя
-POST http://localhost:3338/api/questionnaire/6420ca54ac103330b69a1709 HTTP/1.1
+### Опросник тренера
+POST http://localhost:3338/api/questionnaire-coach/{id} HTTP/1.1
 Content-Type: application/json
 
 {
-  "userId": "64260d16bd98d069c594b563",
+  "userId": "{id}",
+  "trainLevel": "newbie",
+  "typesTraining": ["yoga"],
+  "sertificates": "http://localhost:3338/api/setificates/1.pdf",
+  "merits": "Long work coach for 40 years",
+  "personalTraining": true
+}
+###
+
+### Опросник пользователя
+POST http://localhost:3338/api/questionnaire/{id} HTTP/1.1
+Content-Type: application/json
+
+{
+  "userId": "{id}",
   "trainLevel": "newbie",
   "typesTraining": ["yoga"],
   "timeTraining": 30,
   "resetCalories": 2000,
   "spendCaloriesPerDay": 2000,
   "readTrainig": true
-}
-###
-
-
-### Опросник тренера
-POST http://localhost:3338/api/questionnaire-coach/642615c07b2796ed2379d370 HTTP/1.1
-Content-Type: application/json
-
-{
-  "userId": "642615c07b2796ed2379d370",
-  "trainLevel": "newbie",
-  "typesTraining": ["yoga"],
-  "sertificates": "http://localhost:3338/api/setificates/1.pdf",
-  "merits": "Long work coach for 40 years",
-  "personalTraining": true
 }
 ###
 
@@ -61,7 +60,7 @@ Content-Type: application/json
 
 
 ### Редактирование информации о пользователе
-PUT http://localhost:3338/api/fit-user/update/642615c07b2796ed2379d370 HTTP/1.1
+PUT http://localhost:3338/api/fit-user/update/{id} HTTP/1.1
 Content-Type: application/json 
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI2MTVjMDdiMjc5NmVkMjM3OWQzNzAiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDIxNzk1NCwiZXhwIjoxNjgwMjE4ODU0fQ.degG26VglBxCZyXIJTXITLEyorYvjN8dB-yC6npy-cY
 
@@ -70,7 +69,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI2MTVjM
   "gender": "male"
 }
 ###
-
 
 ### Список пользователей
 GET http://localhost:3338/api/fit-user/list HTTP/1.1

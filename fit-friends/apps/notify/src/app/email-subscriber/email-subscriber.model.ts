@@ -9,6 +9,11 @@ import { Document } from "mongoose";
 })
 export class SubscriberModel extends Document implements Subscriber {
   @Prop()
+  user: string;
+  @Prop()
+  date: Date;
+  
+  @Prop()
   email: string;
 
   @Prop()

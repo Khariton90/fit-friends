@@ -19,7 +19,7 @@ export class AppController {
   @Post('create')
   async create(@Body() dto: CreatePersonalTrainingDto, @Req() req: ExtendedUserRequest) {
     const { user } = req;
-    const newTraining = await this.appService.create({ ...dto, initiator: user.sub });
+    const newTraining = await this.appService.create({ ...dto, initiator: user.sub }, user.email);
     return fillObject(PersonalTrainingRdo, newTraining);
   }
 

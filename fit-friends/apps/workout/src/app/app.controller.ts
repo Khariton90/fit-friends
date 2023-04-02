@@ -5,7 +5,7 @@ import { ExtendedUserRequest } from '@fit-friends/shared-types';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
-import { Controller, Body, UseGuards, Post, Req, Put, Param, Get } from '@nestjs/common';
+import { Controller, Body, UseGuards, Post, Req, Put, Param, Get, Res } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @ApiTags('Workout')
@@ -42,5 +42,10 @@ export class AppController {
   ) {
     const updateWorkout = await this.appService.updateWorkout(id, dto, user);
     return fillObject(WorkoutRdo, updateWorkout);
+  }
+
+  @Get('image/:filename')
+  async getPhoto(@Param('filename') filename: string, @Res() res) {
+    res.sendFile(filename, { root: './uploads' });
   }
 }

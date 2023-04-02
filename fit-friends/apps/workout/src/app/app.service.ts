@@ -4,6 +4,7 @@ import { WorkoutRepository } from './workout.repository';
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { WorkoutEntity } from './workout.entity';
+import { LOCAL_IMAGE } from './app.constant';
 
 @Injectable()
 export class AppService {
@@ -20,7 +21,7 @@ export class AppService {
       throw new BadRequestException('Create workout must be authtorized coachs')
     }
 
-    const workoutEntity = new WorkoutEntity(dto);
+    const workoutEntity = new WorkoutEntity({...dto, image: LOCAL_IMAGE});
     const newWorkout = await this.workoutRepository.create(workoutEntity);
     return newWorkout;
   }
@@ -52,10 +53,6 @@ export class AppService {
 
     if (!existWorkout) {
       throw new NotFoundException('This workout not found');
-    }
-
-    if (existWorkout.coach !== user.sub) {
-      throw new BadRequestException('You can only change your own workouts');
     }
 
     const updateWorkout = await this.workoutRepository.update(id, dto);

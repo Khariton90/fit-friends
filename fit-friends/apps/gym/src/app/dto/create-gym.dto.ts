@@ -14,7 +14,9 @@ export class CreateGymDto {
 
   @ApiProperty({
     description: 'Metro station.',
-    required: true
+    required: true,
+    enum: Location,
+    type: String,
   })
   @IsEnum(Location)
   location: Location;
@@ -28,7 +30,8 @@ export class CreateGymDto {
 
   @ApiProperty({
     description: 'Features of the gym',
-    required: true
+    required: true,
+    enum: GymParameters
   })
   @IsEnum(GymParameters, { each: true })
   parameters: GymParameters[];

@@ -7,6 +7,9 @@ import { FitUserController } from './fit-user.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserModel, UserSchema } from './fit-user.model';
 import { QuestionnaireCoachModel, QuestionnaireCoachModelSchema } from '../questionnaire/questionnaire-coach.model';
+import { ClientsModule } from '@nestjs/microservices';
+import { getRabbitMqConfig } from '../config/rabbitmq.config';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -22,6 +25,13 @@ import { QuestionnaireCoachModel, QuestionnaireCoachModelSchema } from '../quest
     {
       name: QuestionnaireCoachModel.name,
       schema: QuestionnaireCoachModelSchema,
+    }
+  ]),
+  ClientsModule.registerAsync([
+    {
+      name: "RABBITMQ_SERVICE",
+      useFactory: getRabbitMqConfig,
+      inject: [ConfigService],
     }
   ]),
   QuestionnaireModule

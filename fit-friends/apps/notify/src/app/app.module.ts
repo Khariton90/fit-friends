@@ -10,6 +10,8 @@ import { NotifyModel, NotifySchema } from './notify.model';
 import { EmailSubscriberModule } from './email-subscriber/email-subscriber.module';
 import envSchema from './env.schema';
 import { rabbitMqOptions } from './config/rabbitmq.config';
+import { MailModule } from './mail/mail.module';
+import { mailOptions } from './config/mail.config';
 
 @Module({
   imports: [
@@ -17,7 +19,7 @@ import { rabbitMqOptions } from './config/rabbitmq.config';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_NOTIFY_PATH,
-      load: [databaseConfig, rabbitMqOptions],
+      load: [databaseConfig, rabbitMqOptions, mailOptions],
       validationSchema: envSchema,
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),
@@ -25,6 +27,7 @@ import { rabbitMqOptions } from './config/rabbitmq.config';
       { name: NotifyModel.name, schema: NotifySchema },
     ]),
     EmailSubscriberModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],

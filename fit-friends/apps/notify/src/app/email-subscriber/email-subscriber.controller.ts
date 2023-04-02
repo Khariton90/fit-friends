@@ -7,14 +7,12 @@ import { createEvent } from '@fit-friends/core';
 
 @Controller()
 export class EmailSubscriberController {
-
   constructor(
     private readonly emailSubscriberService: EmailSubscriberService,
   ) {}
 
   @EventPattern(createEvent(CommandEvent.AddSubscriber))
   public async create(subscriber: CreateEmailSubscriberDto) {
-    console.log('hello notify');
     return this.emailSubscriberService.addSubscriber(subscriber);
   }
 }

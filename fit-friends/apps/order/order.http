@@ -1,0 +1,27 @@
+//Сервис заказ
+
+### Создание заказа
+POST http://localhost:3336/api/order/create HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {token}
+
+{
+  "purchase": "training",
+  "service": "642858ae021f7d1433c22c76",
+  "price": 1000,
+  "quantity": 2,
+  "paymentMethod": "visa"
+}
+###
+
+### Получение всех заказов
+GET http://localhost:3336/api/order/all HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {token}
+###
+
+### Получение заказа по ID
+GET http://localhost:3336/api/order/{id} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {token}
+###

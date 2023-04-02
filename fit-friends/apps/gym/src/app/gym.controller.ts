@@ -7,6 +7,7 @@ import { GymRdo } from './rdo/gym.rdo';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { multerOptions } from './config/multer.config';
 import { BASE_URL_PHOTO } from './app.constant';
+import { Express } from 'express';
 
 type File = Express.Multer.File;
 

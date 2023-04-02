@@ -1,21 +1,23 @@
 import { UserQuestionnareRdo } from './../questionnaire/rdo/user-questionnare.rto';
 import { FitUserRdo } from './rdo/fit-user.rdo';
-import { fillObject } from '@fit-friends/core';
+import { createEvent, fillObject } from '@fit-friends/core';
 import { UpdateFitUserDto } from './dto/update-fit-user.dto';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
 import { QuestionnaireRepository } from './../questionnaire/questionnaire.repository';
 import { FitUserRepository } from './fit-user.repository';
 import { FitUserEntity } from './fit-user-entity';
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import dayjs from 'dayjs';
-import { UserRole } from '@fit-friends/shared-types';
+import { CommandEvent, UserRole } from '@fit-friends/shared-types';
 import { CoachQuestionnareRdo } from '../questionnaire/rdo/coach-questionnare.rto';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class FitUserService {
   constructor(
     private readonly fitUserRepository: FitUserRepository,
     private readonly questionnaireRepository: QuestionnaireRepository,
+    @Inject("RABBITMQ_SERVICE") private readonly rabbitClient: ClientProxy,
   ) { }
 
   async register(dto: CreateFitUserDto) {
@@ -27,12 +29,19 @@ export class FitUserService {
     }
 
     const fitUser = {
-      username, email, avatar, passwordHash: '', gender, dateBirth: dayjs(dateBirth).toDate(), role, location, createdAt: dayjs().toDate()
+      username, 
+      email, 
+      avatar, 
+      passwordHash: '', 
+      gender, 
+      dateBirth: 
+      dayjs(dateBirth).toDate(), 
+      role, 
+      location, 
+      createdAt: dayjs().toDate()
     }
-
     const fitUserEntity = await new FitUserEntity(fitUser).setPassword(password);
     const createFitUser = await this.fitUserRepository.create(fitUserEntity);
-
     return createFitUser;
   }
 
@@ -93,5 +102,18 @@ export class FitUserService {
     }
 
     return await this.fitUserRepository.update(id, dto);
+  }
+
+  async findSubscriber(id: string, date: Date) {
+    const subscriber = await this.fitUserRepository.findById(id);
+    if (!subscriber) {
+      throw new NotFoundException(`A user with ID ${id} was not found`)
+    }
+
+    this.rabbitClient.emit(createEvent(CommandEvent.AddSubscriber), {
+      user: subscriber.username,
+      email: subscriber.email,
+      date: date
+    })
   }
 }

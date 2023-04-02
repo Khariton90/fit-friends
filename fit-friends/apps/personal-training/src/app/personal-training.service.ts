@@ -1,18 +1,21 @@
 import { PersonalTrainingEntity } from './personal-training.entity';
 import { CreatePersonalTrainingDto } from './dto/create-personal-training.dto';
 import { PersonalTrainingRepository } from './personal-training.repository';
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException, Inject } from '@nestjs/common';
 import { ChangePersonalTrainingDto } from './dto/change-personal-training.dto';
-import { PersonalTraining } from '@fit-friends/shared-types';
+import { CommandEvent, PersonalTraining } from '@fit-friends/shared-types';
 import dayjs from 'dayjs';
+import { ClientProxy } from '@nestjs/microservices';
+import { createEvent } from '@fit-friends/core';
 
 @Injectable()
 export class AppService {
   constructor(
     private readonly personalTrainingRepository: PersonalTrainingRepository,
+    @Inject("RABBITMQ_SERVICE") private readonly rabbitClient: ClientProxy,
   ) { }
 
-  async create(dto: CreatePersonalTrainingDto) {
+  async create(dto: CreatePersonalTrainingDto, email: string) {
     const { initiator, user } = dto;
 
     if (initiator === user) {
@@ -21,6 +24,15 @@ export class AppService {
 
     const createTraining = await this.personalTrainingRepository
       .create(new PersonalTrainingEntity({...dto, changeStatus: dayjs().toDate()}));
+
+      this.rabbitClient.emit(
+      createEvent(CommandEvent.AddPurchase),
+      {
+        id: dto.user,
+        initiator: email,
+        date: dayjs().toDate()
+      }
+    )
     return createTraining;
   }
 

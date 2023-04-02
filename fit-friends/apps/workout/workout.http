@@ -3,16 +3,15 @@
 ### Создание тренировки
 POST http://localhost:3339/api/workout/new HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwZDlhNWFlMzg4NjdhNzg0OTY3OTMiLCJlbWFpbCI6IjJAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTkxMjgwMywiZXhwIjoxNjc5OTEzNzAzfQ.nBellcwSiHcgV5UI_dfUYgI27SSYQb1JmyM6wi361RQ
+Authorization: Bearer {TOKEN}
 
 {
   "title": "The best hard workout",
-  "image": "http://localhost:3339/api/workout/pictures/workout-2023-03-27T00-34-33.jpg",
   "trainLevel": "newbie",
   "typeTraining": "yoga",
   "timeTraining": 30,
-  "price": 100,
-  "calories": 100,
+  "price": 1000,
+  "calories": 1000,
   "description": "No pain no gain",
   "gender": "male",
   "movie": "http://localhost:3339/api/workout/movies/workout-2023-03-27T00-34-33.avi",
@@ -22,13 +21,33 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwZDlhN
 }
 ###
 
-### Редактирование тренировки
-PUT http://localhost:3339/api/workout/64216f9cc4ce22b709aeba1c HTTP/1.1
+### Получение тренировок пользователя
+GET http://localhost:3339/api/workout/all/{coachId} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwZDlhNWFlMzg4NjdhNzg0OTY3OTMiLCJlbWFpbCI6IjJAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTkxNDI0MywiZXhwIjoxNjc5OTE1MTQzfQ.9egw8_JiWch_-bPAgNaBM7N47PxwOq4bBsTulHVjtpg
+Authorization: Bearer {TOKEN}
+###
+
+### Получение информации о тренировке по ID
+GET http://localhost:3339/api/workout/{workoutId} HTTP/1.1
+Content-Type: application/json
+###
+
+### Редактирование тренировки
+PUT http://localhost:3339/api/workout/{id} HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {token}
 
 {
   "title": "The best hard workout",
-  "gender": "female"
+  "trainLevel": "newbie",
+  "typeTraining": "yoga",
+  "timeTraining": 30,
+  "price": 1000,
+  "calories": 1000,
+  "description": "pain no gain",
+  "gender": "male",
+  "movie": "http://localhost:3339/api/workout/movies/workout-2023-03-27T00-34-33.avi",
+  "rating": 5,
+  "specialOffer": true
 }
 ###
