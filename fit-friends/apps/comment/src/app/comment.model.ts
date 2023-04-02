@@ -1,12 +1,13 @@
 import { Document } from "mongoose";
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Comment } from "@fit-friends/shared-types";
 
 @Schema({
   collection: 'comment',
   timestamps: true,
   versionKey: false
 })
-export class CommentModel extends Document {
+export class CommentModel extends Document implements Comment {
   @Prop()
   public author: string;
 

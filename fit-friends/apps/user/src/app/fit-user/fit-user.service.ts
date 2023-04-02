@@ -75,6 +75,16 @@ export class FitUserService {
     }
   }
 
+  async findByEmail(email: string) {
+    const existUser = await this.fitUserRepository.findByEmail(email);
+
+    if (!existUser) {
+      throw new NotFoundException(`User with email ${email} was not found`)
+    }
+
+    return existUser;
+  }
+
   async update(id:string, dto: UpdateFitUserDto) {
     const existUser = await this.fitUserRepository.findById(id);
 

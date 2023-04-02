@@ -10,8 +10,8 @@ export class AuthRepository {
     @InjectModel(AuthModel.name) private readonly authModel: Model<AuthModel>
   ) { }
 
-  async find(refreshToken: string) {
-    const token = await this.authModel.findOne({ refreshToken });
+  async find(userId: string) {
+    const token = await this.authModel.findOne({ userId }).exec();
     return token;
   }
 

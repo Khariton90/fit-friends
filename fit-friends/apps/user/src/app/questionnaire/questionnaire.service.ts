@@ -10,22 +10,24 @@ export class QuestionnaireService {
   ) { }
 
   async findUserOrCreate(dto: CreateQuestionnareDto) {
-    const existQuestion = await this.questionnaireRepository.findUser(dto.userId);
+    const {userId, } = dto;
+    const existQuestion = await this.questionnaireRepository.findUser(userId);
 
-    if (!existQuestion) {
-      return await this.questionnaireRepository.createUser(dto);
+    if (existQuestion) {
+      throw new ConflictException('Description for this user already exists');
     }
 
-    throw new ConflictException('Description for this user already exists');
+    return await this.questionnaireRepository.createUser(dto);
   }
 
   async findCoachOrCreate(dto: CreateCoachQuestionnareDto) {
-    const existQuestion = await this.questionnaireRepository.findCoach(dto.userId);
+    const { userId } = dto;
+    const existQuestion = await this.questionnaireRepository.findCoach(userId);
 
-    if (!existQuestion) {
-      return await this.questionnaireRepository.createCoach(dto);
+    if (existQuestion) {
+      throw new ConflictException('Description for this coach already exists');
     }
 
-    throw new ConflictException('Description for this coach already exists');
+    return await this.questionnaireRepository.createCoach(dto);
   }
 }

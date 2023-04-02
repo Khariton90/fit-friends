@@ -12,23 +12,26 @@ export class PersonalTrainingRepository implements CRUDRepository<PersonalTraini
     @InjectModel(PersonalTrainingModel.name) private readonly personalTrainingModel: Model<PersonalTrainingModel>,
   ){}
 
-  findById(id: string): Promise<PersonalTraining> {
-    throw new Error("Method not implemented.");
+  async find(id: string) {
+    return this.personalTrainingModel.find({id}).exec();
+  }
+
+  async findById(id: string): Promise<PersonalTraining | null> {
+    return this.personalTrainingModel.findOne({id}).exec();
   }
 
   async create(item: PersonalTrainingEntity): Promise<PersonalTraining> {
     const newTraining = new this.personalTrainingModel(item);
-
     return newTraining.save();
   }
 
   async update(id: string, item: PersonalTrainingEntity): Promise<PersonalTraining> {
-    const updateTraining = await this.personalTrainingModel.findOneAndUpdate({user: id}, item.toObject(), {new: true}).exec();
-
+    const updateTraining = await this.personalTrainingModel
+      .findOneAndUpdate({id}, item.toObject(), {new: true}).exec();
     return updateTraining
   }
   
-  destroy(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  async destroy(id: string): Promise<void> {
+    this.personalTrainingModel.findOneAndDelete({id});
   }
 }

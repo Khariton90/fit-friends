@@ -22,9 +22,6 @@ export class PersonalTrainingModel extends Document implements PersonalTrainingM
     enum: PersonalTrainingStatus
   })
   status: PersonalTrainingStatus;
-
-  @Prop()
-  createdAt: Date;
 }
 
 export const PersonalTrainingSchema = SchemaFactory.createForClass(PersonalTrainingModel);

@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { fillObject } from '@fit-friends/core';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { LoginUserDto } from './dto/login-user.dto';
+import { LocalAuthGuard } from '../guards/local-auth.guard';
 
 @ApiTags('Authentication')
 @Controller('auth')
@@ -21,6 +22,7 @@ export class AuthController {
     return fillObject(LoginUserRdo, user);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Body() dto: LoginUserDto) {
     const user = await this.authService.authorization(dto);

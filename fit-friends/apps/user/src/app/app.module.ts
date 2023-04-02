@@ -10,6 +10,7 @@ import databaseConfig from './config/database.config';
 import envSchema from './env.schema';
 import { jwtOptions } from './config/jwt.config';
 import { QuestionnaireModule } from './questionnaire/questionnaire.module';
+import { rabbitMqOptions } from './config/rabbitmq.config';
 
 @Module({
   imports: [
@@ -17,7 +18,7 @@ import { QuestionnaireModule } from './questionnaire/questionnaire.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_USER_PATH,
-      load: [databaseConfig, jwtOptions],
+      load: [databaseConfig, jwtOptions, rabbitMqOptions],
       validationSchema: envSchema,
     }),
     MongooseModule.forRootAsync(getMongoDbConfig()),

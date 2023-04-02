@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsEnum, MaxLength, Length, IsInt, Min } from 'class-validator';
+import { IsNotEmpty, IsString, IsEnum, IsInt, Min, Max, IsArray, ArrayMaxSize } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { TrainLevel, TypeTraining } from '@fit-friends/shared-types';
 import { ResetCalories, TYPE_TRAINING_MAX_LENGTH } from '../questionnaire.constant';
@@ -26,9 +26,8 @@ export class CreateQuestionnareDto {
     example: ['yoga', 'boxing', 'unning'],
     enum: TypeTraining
   })
-  @MaxLength(TYPE_TRAINING_MAX_LENGTH, {
-    each: true
-  })
+  @IsArray()
+  @ArrayMaxSize(TYPE_TRAINING_MAX_LENGTH)
   @IsNotEmpty()
   typesTraining: TypeTraining[];
 
@@ -46,7 +45,8 @@ export class CreateQuestionnareDto {
   })
   @IsNotEmpty()
   @IsInt()
-  @Length(ResetCalories.Min, ResetCalories.Max)
+  @Min(ResetCalories.Min)
+  @Max(ResetCalories.Max)
   resetCalories: number;
 
   @ApiProperty({
@@ -55,7 +55,8 @@ export class CreateQuestionnareDto {
   })
   @IsNotEmpty()
   @IsInt()
-  @Length(ResetCalories.Min, ResetCalories.Max)
+  @Min(ResetCalories.Min)
+  @Max(ResetCalories.Max)
   spendCaloriesPerDay: number;
 
   @ApiProperty({

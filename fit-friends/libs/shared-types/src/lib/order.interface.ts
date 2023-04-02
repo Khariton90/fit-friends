@@ -4,10 +4,9 @@ import { PaymentMethod } from "./payment-method.enum";
 export interface Order {
   _id?: string;
   purchase: OrderType;
-  service: OrderType;
+  service: string;
   price: number;
   quantity: number;
   amountPrice: number;
   paymentMethod: PaymentMethod;
-  createdAt: Date;
 }

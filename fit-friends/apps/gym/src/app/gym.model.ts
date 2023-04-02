@@ -1,23 +1,30 @@
 import { Document } from "mongoose";
 import { Schema, Prop, SchemaFactory } from '@nestjs/mongoose';
+import { Gym, GymParameters, Location } from "@fit-friends/shared-types";
 
 @Schema({
   collection: 'gym',
   timestamps: true,
   versionKey: false
 })
-export class GymModel extends Document {
+export class GymModel extends Document implements Gym {
   @Prop()
   title: string;
 
-  @Prop()
-  location: string;
+  @Prop({
+    type: String,
+    enum: Location
+  })
+  location: Location;
 
   @Prop()
   verify: boolean;
 
-  @Prop()
-  parameters: string[];
+  @Prop({
+    type: Array,
+    enum: GymParameters
+  })
+  parameters: GymParameters[];
 
   @Prop()
   photos: string[];

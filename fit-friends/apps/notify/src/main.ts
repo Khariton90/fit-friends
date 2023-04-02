@@ -1,28 +1,18 @@
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
+import { getRabbitMqConfig } from './app/config/rabbitmq.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  const globalPrefix = 'api';
-  app.setGlobalPrefix(globalPrefix);
 
-  const config = new DocumentBuilder()
-  .setTitle('The «Notify» Service')
-  .setDescription('Notify service API')
-  .setVersion('1.0')
-  .build();
+const configService = app.get<ConfigService>(ConfigService);
+app.connectMicroservice(getRabbitMqConfig(configService));
 
-const document = SwaggerModule.createDocument(app, config);
-SwaggerModule.setup('spec', app, document);
-
-app.useGlobalPipes(new ValidationPipe({transform: true}));
-
-  const port = process.env.PORT || 3335;
-  await app.listen(port);
+await app.startAllMicroservices();
   Logger.log(
-    `🚀 Application is running on: http://localhost:${port}/${globalPrefix}`
+    `🚀 Notify service is running on`
   );
 }
 

@@ -7,7 +7,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwYzE0M
 
 {
   "username": "FooBar",
-  "email": "3@mail.ru",
+  "email": "2@mail.ru",
   "avatar": "http://localhost:3338/api/fit-user/avatar/user-2023-03-27T00-43-48.jpg",
   "password": "1234567",
   "gender": "male",
@@ -23,11 +23,11 @@ POST http://localhost:3338/api/questionnaire/6420ca54ac103330b69a1709 HTTP/1.1
 Content-Type: application/json
 
 {
-  "userId": "6420ca54ac103330b69a1709",
+  "userId": "64260d16bd98d069c594b563",
   "trainLevel": "newbie",
-  "typesTraining": "yoga",
+  "typesTraining": ["yoga"],
   "timeTraining": 30,
-  "resetCalories": 400,
+  "resetCalories": 2000,
   "spendCaloriesPerDay": 2000,
   "readTrainig": true
 }
@@ -35,14 +35,14 @@ Content-Type: application/json
 
 
 ### Опросник тренера
-POST http://localhost:3338/api/questionnaire-coach/6420d9a5ae38867a78496793 HTTP/1.1
+POST http://localhost:3338/api/questionnaire-coach/642615c07b2796ed2379d370 HTTP/1.1
 Content-Type: application/json
 
 {
-  "userId": "6420d9a5ae38867a78496793",
+  "userId": "642615c07b2796ed2379d370",
   "trainLevel": "newbie",
-  "typesTraining": "yoga",
-  "sertificates": "http://localhost:3338/api/setificates/1.jpg",
+  "typesTraining": ["yoga"],
+  "sertificates": "http://localhost:3338/api/setificates/1.pdf",
   "merits": "Long work coach for 40 years",
   "personalTraining": true
 }
@@ -54,16 +54,16 @@ POST http://localhost:3338/api/auth/login HTTP/1.1
 Content-Type: application/json 
 
 {
-  "email": "1@mail.ru",
+  "email": "2@mail.ru",
   "password": "1234567"
 }
 ###
 
 
 ### Редактирование информации о пользователе
-PUT http://localhost:3338/api/fit-user/update/6420ca54ac103330b69a1709 HTTP/1.1
+PUT http://localhost:3338/api/fit-user/update/642615c07b2796ed2379d370 HTTP/1.1
 Content-Type: application/json 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwY2E1NGFjMTAzMzMwYjY5YTE3MDkiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5OTM2MjIwLCJleHAiOjE2Nzk5MzcxMjB9._uE6vmkqH7esNuwye2rBZe9_W69JPwYGzdkjJ9LefuY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI2MTVjMDdiMjc5NmVkMjM3OWQzNzAiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDIxNzk1NCwiZXhwIjoxNjgwMjE4ODU0fQ.degG26VglBxCZyXIJTXITLEyorYvjN8dB-yC6npy-cY
 
 {
   "username": "John",
@@ -74,13 +74,13 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwY2E1N
 
 ### Список пользователей
 GET http://localhost:3338/api/fit-user/list HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIwY2E1NGFjMTAzMzMwYjY5YTE3MDkiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjc5OTM1ODQ0LCJleHAiOjE2Nzk5MzY3NDR9.7bK5FNRmSGFkIYJHSd-yQXcxDC0hEsVw_wsUuI09b94
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI2MTVjMDdiMjc5NmVkMjM3OWQzNzAiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDIxNzk1NCwiZXhwIjoxNjgwMjE4ODU0fQ.degG26VglBxCZyXIJTXITLEyorYvjN8dB-yC6npy-cY
 ###
 
 
 ### Детальная информация о пользователе
-GET http://localhost:3338/api/fit-user/641a0c58343b53f027046706
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMGM1ODM0M2I1M2YwMjcwNDY3MDYiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTc2ODE3NywiZXhwIjoxNjc5NzY5MDc3fQ.VWNccVwdFneoeAIoXMxsCt3s2C5vvAGJ8SLdkWfZrPw
+GET http://localhost:3338/api/fit-user/642615c07b2796ed2379d370
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI2MTVjMDdiMjc5NmVkMjM3OWQzNzAiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDIxNzk1NCwiZXhwIjoxNjgwMjE4ODU0fQ.degG26VglBxCZyXIJTXITLEyorYvjN8dB-yC6npy-cY
 ###
 
 
@@ -89,7 +89,7 @@ POST http://localhost:3338/api/auth/refresh HTTP/1.1
 Content-Type: application/json 
 
 {
-  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFhMGM1ODM0M2I1M2YwMjcwNDY3MDYiLCJlbWFpbCI6IjFAbWFpbC5ydSIsImlhdCI6MTY3OTQyODc1NSwiZXhwIjoxNjgwMDMzNTU1fQ.YUHl3onjwYplzv0vy1Mqzx4VdWshNeNkolyYD39uHlE"
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI2MTVjMDdiMjc5NmVkMjM3OWQzNzAiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDI2NTIxNSwiZXhwIjoxNjgwMjY2MTE1fQ.SWSH_F9F4PpfNC3G7ygNh968S9mjkY_Rc_FcOouEBE0"
 }
 ###
 

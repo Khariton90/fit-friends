@@ -28,6 +28,6 @@ import { QuestionnaireCoachModel, QuestionnaireCoachModelSchema } from '../quest
 ],
   providers: [FitUserService, FitUserRepository],
   controllers: [FitUserController],
-  exports: [FitUserRepository]
+  exports: [FitUserRepository, FitUserService]
 })
 export class FitUserModule {}

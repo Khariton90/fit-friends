@@ -1,7 +1,11 @@
 import { CreateCommentDto } from './dto/create-comment.dto';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { AppService } from './comment.service';
 import { ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { CheckMongoidValidationPipe, fillObject } from '@fit-friends/core';
+import { ExtendedUserRequest } from '@fit-friends/shared-types';
+import { CommentRdo } from './rdo/comment.rdo';
 
 @ApiTags('Comment')
 @Controller('comment')
@@ -11,12 +15,15 @@ export class AppController {
   @Get('/:workoutId')
   async findAll(@Param('workoutId') workoutId: string) {
     const comments = await this.appService.findAll(workoutId);
-    return comments;
+    return fillObject(CommentRdo, comments);
   }
 
-  @Post('/:id')
-  async createComment(@Body() dto: CreateCommentDto, @Param('id') id: string) {
-    const newComment = await this.appService.create(dto);
-    return newComment;
+  @UseGuards(JwtAuthGuard)
+  @Post('/:workoutId')
+  async createComment(
+    @Param('workoutId', CheckMongoidValidationPipe) workoutId: string, 
+    @Body() dto: CreateCommentDto, @Req() req: ExtendedUserRequest) {
+    const newComment = await this.appService.create(dto, req.user.sub, workoutId);
+    return fillObject(CommentRdo, newComment);
   }
 }

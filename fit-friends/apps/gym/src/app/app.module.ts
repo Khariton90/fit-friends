@@ -3,11 +3,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ENV_FILE_GYM_PATH } from './app.constant';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { GymController } from './gym.controller';
+import { GymService } from './gym.service';
 import databaseConfig from './config/database.config';
 import { getMongoDbConfig } from './config/mongodb.config';
 import envSchema from './env.schema';
+import { GymRepository } from './gym.repository';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import envSchema from './env.schema';
       {name: GymModel.name, schema: GymSchema}
     ])
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [GymController],
+  providers: [GymService, GymRepository],
 })
 export class AppModule {}

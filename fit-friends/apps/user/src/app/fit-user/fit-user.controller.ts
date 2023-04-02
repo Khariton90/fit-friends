@@ -4,7 +4,20 @@ import { ExtendedUserRequest } from '@fit-friends/shared-types';
 import { ApiTags } from '@nestjs/swagger';
 import { fillObject } from '@fit-friends/core';
 import { FitUserService } from './fit-user.service';
-import { Controller, Post, Body, UseGuards, Get, Param, Req, UseInterceptors, UploadedFile, Res, BadRequestException, Put } from '@nestjs/common';
+import { 
+  Controller, 
+  Post, 
+  Body, 
+  UseGuards, 
+  Get, 
+  Param, 
+  Req, 
+  UseInterceptors, 
+  UploadedFile, 
+  Res, 
+  BadRequestException, 
+  Put 
+} from '@nestjs/common';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { CheckMongoidValidationPipe } from '@fit-friends/core';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -24,6 +37,7 @@ export class FitUserController {
     private readonly fitUserService: FitUserService
   ) { }
 
+
   @Post('register')
   async create(@Body() dto: CreateFitUserDto) {
     const newUser = await this.fitUserService.register(dto);
@@ -41,7 +55,6 @@ export class FitUserController {
   @UseGuards(JwtAuthGuard)
   @Get('/:id')
   async findById(@Param('id', CheckMongoidValidationPipe) id: string) {
-
     const user = await this.fitUserService.findById(id);
     return user;
   }

@@ -9,6 +9,8 @@ import { getMongoDbConfig } from './config/mongodb.config';
 import { ENV_FILE_COMMENT_PATH } from './comment.constant';
 import { CommentRepository } from './comment.repository';
 import envSchema from './env.schema';
+import { jwtOptions } from './config/jwt.config';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -16,7 +18,7 @@ import envSchema from './env.schema';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_COMMENT_PATH,
-      load: [databaseConfig],
+      load: [databaseConfig, jwtOptions],
       validationSchema: envSchema,
     }),
     MongooseModule.forRootAsync(
@@ -27,6 +29,6 @@ import envSchema from './env.schema';
     ])
   ],
   controllers: [AppController],
-  providers: [AppService, CommentRepository],
+  providers: [AppService, CommentRepository, JwtStrategy],
 })
 export class AppModule {}

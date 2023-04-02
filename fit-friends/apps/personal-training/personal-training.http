@@ -2,11 +2,11 @@
 
 POST http://localhost:3337/api/personal-training HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDFlY2FkYTZjYzkzZGYxOWRlZDMyYjIiLCJlbWFpbCI6IjJAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY3OTc3OTEzMywiZXhwIjoxNjc5NzgwMDMzfQ.EI-fSVbqRO1kNsiruGjui-ZKoqTFvA612oDzd08NnMo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI2MTVjMDdiMjc5NmVkMjM3OWQzNzAiLCJlbWFpbCI6IjFAbWFpbC5ydSIsInJvbGUiOiJjb2FjaCIsImlhdCI6MTY4MDI4ODg4MCwiZXhwIjoxNjgwMjg5NzgwfQ.qYiTOdj3CVQTKxK1LEHKE6IRsbxT54V266ZP1XJScOo
 
 {
-  "initiator": "641ecada6cc93df19ded32b2",
-  "user": "641a0c58343b53f027046706",
+  "initiator": "642615c07b2796ed2379d370",
+  "user": "6426d650929b8c338ce73f7e",
   "changeStatus": "2023-03-21T19:59:15.563Z",
   "status": "pending"
 }

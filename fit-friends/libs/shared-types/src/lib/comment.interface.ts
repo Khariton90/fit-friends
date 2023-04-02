@@ -4,5 +4,4 @@ export interface Comment {
   workout: string;
   rating: number;
   review: string;
-  createdAt: Date;
 }
