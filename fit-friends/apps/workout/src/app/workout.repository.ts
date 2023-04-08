@@ -6,6 +6,9 @@ import { WorkoutEntity } from './workout.entity';
 import { CRUDRepository } from "@fit-friends/core";
 import { Workout } from '@fit-friends/shared-types';
 import { Model } from 'mongoose';
+import { WorkoutQuery } from './query/workout.query';
+
+const DEFAULT_LIMIT_WORKOUT = 50;
 
 @Injectable()
 export class WorkoutRepository implements CRUDRepository<WorkoutEntity, string, Workout>{
@@ -18,8 +21,20 @@ export class WorkoutRepository implements CRUDRepository<WorkoutEntity, string, 
     return newWorkout.save();
   }
 
-  async find(id: string): Promise<Workout[] | []> {
-    const workoutList = await this.workoutModel.find({coach: id});
+  async find(id: string, query: WorkoutQuery): Promise<Workout[] | []> {
+    const pageOptions = {
+      page: query.skip > 1 ? query.skip - 1 : 0,
+      date: query.date || -1,
+    }
+    
+    const workoutList = await this.workoutModel
+    .find({coach: id})
+    .sort([
+      ['date', pageOptions.date]])
+    .limit(DEFAULT_LIMIT_WORKOUT)
+    .skip(pageOptions.page * DEFAULT_LIMIT_WORKOUT)
+    .exec();
+
     return workoutList;
   }
 

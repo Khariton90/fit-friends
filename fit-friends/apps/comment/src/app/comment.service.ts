@@ -3,6 +3,7 @@ import { CommentRepository } from './comment.repository';
 import { Injectable } from '@nestjs/common';
 import { CommentEntity } from './comment.entity';
 import { Comment } from '@fit-friends/shared-types';
+import { CommentQuery } from './query/comment.query';
 
 @Injectable()
 export class AppService {
@@ -10,8 +11,8 @@ export class AppService {
     private readonly commentRepository: CommentRepository,
   ) {}
 
-  public async findAll(id: string): Promise<Comment[] | []> {
-    const comments = await this.commentRepository.find(id);
+  public async findAll(id: string, query: CommentQuery): Promise<Comment[] | []> {
+    const comments = await this.commentRepository.find(id, query);
     return comments;
   }
 

@@ -5,6 +5,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { WorkoutEntity } from './workout.entity';
 import { LOCAL_IMAGE } from './app.constant';
+import { WorkoutQuery } from './query/workout.query';
 
 @Injectable()
 export class AppService {
@@ -26,12 +27,12 @@ export class AppService {
     return newWorkout;
   }
 
-  async find(coachId: string, user: UserRequest) {
+  async find(coachId: string, user: UserRequest, query: WorkoutQuery) {
     if (coachId !== user.sub) {
       throw new BadRequestException('It is possible to request only your own training')
     }
 
-    return await this.workoutRepository.find(coachId);
+    return await this.workoutRepository.find(coachId, query);
   }
 
   async findById(workoutId: string) {

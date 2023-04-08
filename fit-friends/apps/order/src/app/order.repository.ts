@@ -7,11 +7,13 @@ import { OrderModel } from "./order.model";
 import { Model } from "mongoose";
 import { OrderQuery } from "./query/order.query";
 
+const DEFAULT_LIMIT_ORDERS = 50;
+
 @Injectable()
 export class OrderRepository implements CRUDRepository<OrderEntity, string, Order> {
   constructor(
     @InjectModel(OrderModel.name) private readonly orderModel: Model<OrderModel>,
-  ) {}
+  ) { }
 
   public async find(query: OrderQuery): Promise<Order[] | []> {
     const sortOptions = {
@@ -19,8 +21,12 @@ export class OrderRepository implements CRUDRepository<OrderEntity, string, Orde
       quantity: query.quantity || -1
     }
 
-    const orders = this.orderModel.find()
-    .sort([['amountPrice', sortOptions.price], ['quantity', sortOptions.quantity]]);
+    const orders = this.orderModel
+      .find()
+      .sort([['amountPrice', sortOptions.price], ['quantity', sortOptions.quantity]])
+      .limit(DEFAULT_LIMIT_ORDERS)
+      .exec();
+
     return orders;
   }
 
@@ -35,11 +41,11 @@ export class OrderRepository implements CRUDRepository<OrderEntity, string, Orde
   }
 
   public async update(id: string, item: OrderEntity): Promise<Order> {
-    return this.orderModel.findByIdAndUpdate(id, item.toObject(), {new: true});
+    return this.orderModel.findByIdAndUpdate(id, item.toObject(), { new: true });
   }
 
   public async destroy(id: string): Promise<void> {
     this.orderModel.findByIdAndDelete(id);
   }
-  
+
 }

@@ -1,7 +1,11 @@
 //Сервис Спорт зал
+@Host = localhost
+@Port = 3334
+@ApiKey = Bearer api-key-one
+@GymId = id
 
 ### Создание зала
-POST http://localhost:3334/api/gym/create HTTP/1.1
+POST http://{{Host}}:{{Port}}/api/gym/create HTTP/1.1
 Content-Type: application/json
 {
   "title": "string",
@@ -20,23 +24,23 @@ Content-Type: application/json
 ###
 
 ### Получение всех залов
-GET http://localhost:3334/api/gym/all HTTP/1.1
+GET http://{{Host}}:{{Port}}/api/gym/all HTTP/1.1
 
 ###
 
 ### Получение зала по ID
-GET http://localhost:3334/api/gym/{id} HTTP/1.1
+GET http://{{Host}}:{{Port}}/api/gym/{{GymId}} HTTP/1.1
 
 ###
 
 
 ### Загрузка изображения
-POST http://localhost:3334/api/gym/upload HTTP/1.1
+POST http://{{Host}}:{{Port}}/api/gym/upload HTTP/1.1
 Content-Type: multipart/form-data
 ###
 
 
 ### Получение изображения
-GET  http://localhost:3334/api/gym/upload/{filename} HTTP/1.1
+GET  http://{{Host}}:{{Port}}/api/gym/upload/{filename} HTTP/1.1
 Content-Type: multipart/form-data
 ###

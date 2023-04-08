@@ -7,6 +7,7 @@ import { CommandEvent, PersonalTraining } from '@fit-friends/shared-types';
 import dayjs from 'dayjs';
 import { ClientProxy } from '@nestjs/microservices';
 import { createEvent } from '@fit-friends/core';
+import { PersonalTrainingQuery } from './query/personal-training.query';
 
 @Injectable()
 export class AppService {
@@ -36,8 +37,8 @@ export class AppService {
     return createTraining;
   }
 
-  async findAll(id: string): Promise<PersonalTraining[] | []> {
-    return await this.personalTrainingRepository.find(id);
+  async findAll(id: string, query: PersonalTrainingQuery): Promise<PersonalTraining[] | []> {
+    return await this.personalTrainingRepository.find(id, query);
   }
 
   async update(id: string, dto: ChangePersonalTrainingDto, userId: string) {

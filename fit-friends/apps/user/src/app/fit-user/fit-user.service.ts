@@ -11,6 +11,7 @@ import dayjs from 'dayjs';
 import { CommandEvent, UserRole } from '@fit-friends/shared-types';
 import { CoachQuestionnareRdo } from '../questionnaire/rdo/coach-questionnare.rto';
 import { ClientProxy } from '@nestjs/microservices';
+import { FitUserQuery } from './query/fit-user.query';
 
 @Injectable()
 export class FitUserService {
@@ -45,12 +46,12 @@ export class FitUserService {
     return createFitUser;
   }
 
-  async find(role: string) {
+  async find(role: string, query: FitUserQuery) {
     if (role !== UserRole.User) {
       throw new BadRequestException('List with users is only available for the type user')
     }
     
-    return await this.fitUserRepository.find();
+    return await this.fitUserRepository.find(query);
   }
 
   async findById(id: string) {

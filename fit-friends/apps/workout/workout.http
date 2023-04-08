@@ -1,9 +1,14 @@
 ///Тренировка
+@Host = localhost
+@Port = 3339
+@ApiKey = Bearer api-key-one
+@WorkoutId = id
+@CoachId = id
 
 ### Создание тренировки
-POST http://localhost:3339/api/workout/new HTTP/1.1
+POST http://{{Host}}:{{Port}}/api/workout/new HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {TOKEN}
+Authorization: {{ApiKey}}
 
 {
   "title": "The best hard workout",
@@ -22,20 +27,20 @@ Authorization: Bearer {TOKEN}
 ###
 
 ### Получение тренировок пользователя
-GET http://localhost:3339/api/workout/all/{coachId} HTTP/1.1
+GET http://{{Host}}:{{Port}}/api/workout/all/{{@CoachId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {TOKEN}
+Authorization: {{ApiKey}}
 ###
 
 ### Получение информации о тренировке по ID
-GET http://localhost:3339/api/workout/{workoutId} HTTP/1.1
+GET http://{{Host}}:{{Port}}/api/workout/{{WorkoutId}} HTTP/1.1
 Content-Type: application/json
 ###
 
 ### Редактирование тренировки
-PUT http://localhost:3339/api/workout/{id} HTTP/1.1
+PUT http://{{Host}}:{{Port}}/api/workout/{{WorkoutId}} HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer {token}
+Authorization: {{ApiKey}}
 
 {
   "title": "The best hard workout",

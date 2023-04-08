@@ -5,6 +5,9 @@ import { CRUDRepository } from "@fit-friends/core";
 import { PersonalTraining } from "@fit-friends/shared-types";
 import { PersonalTrainingEntity } from "./personal-training.entity";
 import { Model } from 'mongoose';
+import { PersonalTrainingQuery } from './query/personal-training.query';
+
+const DEFAULT_LIMIT_PERSONAL_TRAINING = 50;
 
 @Injectable()
 export class PersonalTrainingRepository implements CRUDRepository<PersonalTrainingEntity, string, PersonalTraining> {
@@ -12,8 +15,21 @@ export class PersonalTrainingRepository implements CRUDRepository<PersonalTraini
     @InjectModel(PersonalTrainingModel.name) private readonly personalTrainingModel: Model<PersonalTrainingModel>,
   ){}
 
-  async find(id: string) {
-    return this.personalTrainingModel.find({id}).exec();
+  async find(id: string, query: PersonalTrainingQuery) {
+    const pageOptions = {
+      page: query.skip > 1 ? query.skip - 1 : 0,
+      date: query.date || -1,
+    }
+
+    const personalTrainingList =  this.personalTrainingModel
+    .find({id})
+    .sort([
+      ['date', pageOptions.date]])
+    .limit(DEFAULT_LIMIT_PERSONAL_TRAINING)
+    .skip(pageOptions.page * DEFAULT_LIMIT_PERSONAL_TRAINING)
+    .exec();
+
+    return personalTrainingList;
   }
 
   async findById(id: string): Promise<PersonalTraining | null> {

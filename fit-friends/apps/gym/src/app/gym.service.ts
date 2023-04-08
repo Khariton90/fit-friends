@@ -3,6 +3,7 @@ import { GymRepository } from './gym.repository';
 import { CreateGymDto } from './dto/create-gym.dto';
 import { GymEntity } from './gym.entity';
 import { Gym } from '@fit-friends/shared-types';
+import { GymQuery } from './query/gym.query';
 
 @Injectable()
 export class GymService {
@@ -15,8 +16,8 @@ export class GymService {
     return newGym;
   }
 
-  async findAll(): Promise<Gym[] | []> {
-    return await this.gymRepository.find();
+  async findAll(query: GymQuery): Promise<Gym[] | []> {
+    return await this.gymRepository.find(query);
   }
 
   async findGym(id: string): Promise<Gym | null> {
