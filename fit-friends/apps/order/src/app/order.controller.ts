@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpStatus, Param, Post, Query, UseGuards } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { CheckMongoidValidationPipe, fillObject } from '@fit-friends/core';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -25,6 +25,7 @@ export class OrderController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not authorized'
   })
+  @ApiOperation({summary: 'Creating a new order'})
   async create(@Body() dto: CreateOrderDto) {
     const newOrder = await this.orderService.createOrder(dto);
     return fillObject(OrderRdo, newOrder);
@@ -41,6 +42,7 @@ export class OrderController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not authorized'
   })
+  @ApiOperation({summary: 'Get a list of orders for an authorized user'})
   async findAll(@Query() query: OrderQuery) {
     const orderList = await this.orderService.findOrders(query);
     return fillObject(OrderRdo, orderList);
@@ -57,6 +59,7 @@ export class OrderController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not authorized'
   })
+  @ApiOperation({summary: 'Get order by ID'})
   async find(@Param('id', CheckMongoidValidationPipe) id: string) {
     const order = await this.orderService.findOne(id);
     return fillObject(OrderRdo, order);

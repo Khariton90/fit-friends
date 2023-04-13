@@ -6,14 +6,6 @@ import { TYPE_TRAINING_MAX_LENGTH } from '../questionnaire.constant';
 
 export class CreateCoachQuestionnareDto {
   @ApiProperty({
-    description: 'Unique ID user',
-    example:'64206f6018e913bbbd81cce2',
-    required: true
-  })
-  @IsNotEmpty()
-  userId: string;
-
-  @ApiProperty({
     description: 'The level of training',
     example: 'newbie | amateur | pro',
     required: true

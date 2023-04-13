@@ -1,9 +1,11 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserQuestionnareRdo } from './rdo/user-questionnare.rto';
 import { fillObject } from '@fit-friends/core';
 import { CreateQuestionnareDto } from './dto/create-questionnare.dto';
-import { Body, Controller, Param, Post } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { QuestionnaireService } from './questionnaire.service';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { ExtendedUserRequest } from '@fit-friends/shared-types';
 
 @ApiTags('The questionnaire of user')
 @Controller('questionnaire')
@@ -12,9 +14,11 @@ export class QuestionnaireController {
     private readonly questionnaireService: QuestionnaireService,
   ) {}
 
-  @Post('/:id')
-  async create(@Param('id') id: string, @Body() dto: CreateQuestionnareDto) {
-    const question = await this.questionnaireService.findUserOrCreate(dto);
+  @UseGuards(JwtAuthGuard)
+  @Post()
+  @ApiOperation({summary: 'Adding additional user information with the role "user"'})
+  async create(@Body() dto: CreateQuestionnareDto, @Req() {user}: ExtendedUserRequest) {
+    const question = await this.questionnaireService.findUserOrCreate(dto, user.sub);
     return fillObject(UserQuestionnareRdo, question);
   }
 }

@@ -1,17 +1,9 @@
-import { IsNotEmpty, IsString, IsEnum, IsInt, Min, Max, IsArray, ArrayMaxSize } from 'class-validator';
+import { IsNotEmpty, IsEnum, IsInt, Min, Max, IsArray, ArrayMaxSize } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { TrainLevel, TypeTraining } from '@fit-friends/shared-types';
 import { ResetCalories, TYPE_TRAINING_MAX_LENGTH } from '../questionnaire.constant';
 
 export class CreateQuestionnareDto {
-  @ApiProperty({
-    description: 'Unique ID user',
-    example:'64206f6018e913bbbd81cce2',
-  })
-  @IsNotEmpty()
-  @IsString()
-  userId!: string;
-
   @ApiProperty({
     description: 'The level of training',
     example: 'newbie | amateur | pro',

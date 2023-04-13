@@ -1,4 +1,4 @@
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './../guards/jwt-auth.guard';
 import { CheckMongoidValidationPipe } from '@fit-friends/core';
 import { LoginUserRdo } from './rdo/login-user.rdo';
@@ -16,12 +16,14 @@ export class AuthController {
     private readonly authService: AuthService
   ) {}
 
+  @ApiOperation({summary: 'Verify user'})
   @Post('verify')
   async verifyUser(@Body() dto: LoginUserDto) {
     const user = await this.authService.authorization(dto);
     return fillObject(LoginUserRdo, user);
   }
 
+  @ApiOperation({summary: 'Login user'})
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Body() dto: LoginUserDto) {
@@ -30,6 +32,7 @@ export class AuthController {
     return fillObject(LoginUserRdo, authUser);
   }
 
+  @ApiOperation({summary: 'Authentication user on ID'})
   @UseGuards(JwtAuthGuard)
   @Get(':id')
   async show(@Param('id', CheckMongoidValidationPipe) id: string) {
@@ -37,6 +40,7 @@ export class AuthController {
     return existUser;
   }
 
+  @ApiOperation({summary: 'Refresh token'})
   @Post('refresh')
   async refreshTokens(@Body() dto: RefreshTokenDto) {
     return await this.authService.refreshToken(dto);

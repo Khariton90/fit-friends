@@ -1,12 +1,10 @@
-import { CRUDRepository } from "@fit-friends/core";
+import { CRUDRepository, DEFAULT_QUERY_LIMIT } from "@fit-friends/core";
 import { GymEntity } from "./gym.entity";
 import { Gym } from "@fit-friends/shared-types";
 import { InjectModel } from "@nestjs/mongoose";
 import { GymModel } from "./gym.model";
 import { Model } from 'mongoose';
 import { GymQuery } from "./query/gym.query";
-
-const DEFAULT_LIMIT_GYM = 50;
 
 export class GymRepository implements CRUDRepository<GymEntity, string, Gym> {
   constructor(
@@ -17,13 +15,14 @@ export class GymRepository implements CRUDRepository<GymEntity, string, Gym> {
     const pageOptions = {
       page: query.skip > 1 ? query.skip - 1 : 0,
       date: query.date || -1,
+      query: query.limit ? query.limit : DEFAULT_QUERY_LIMIT
     }
 
     const gymList =  this.gymModel.find()
     .sort([
       ['date', pageOptions.date]])
-    .limit(DEFAULT_LIMIT_GYM)
-    .skip(pageOptions.page * DEFAULT_LIMIT_GYM)
+    .limit(pageOptions.query)
+    .skip(pageOptions.page * pageOptions.query)
     .exec();
 
     return gymList;

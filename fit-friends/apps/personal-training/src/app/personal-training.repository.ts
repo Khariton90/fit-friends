@@ -1,13 +1,12 @@
 import { PersonalTrainingModel } from './personal-training.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
-import { CRUDRepository } from "@fit-friends/core";
+import { CRUDRepository, DEFAULT_QUERY_LIMIT } from "@fit-friends/core";
 import { PersonalTraining } from "@fit-friends/shared-types";
 import { PersonalTrainingEntity } from "./personal-training.entity";
 import { Model } from 'mongoose';
 import { PersonalTrainingQuery } from './query/personal-training.query';
 
-const DEFAULT_LIMIT_PERSONAL_TRAINING = 50;
 
 @Injectable()
 export class PersonalTrainingRepository implements CRUDRepository<PersonalTrainingEntity, string, PersonalTraining> {
@@ -19,14 +18,15 @@ export class PersonalTrainingRepository implements CRUDRepository<PersonalTraini
     const pageOptions = {
       page: query.skip > 1 ? query.skip - 1 : 0,
       date: query.date || -1,
+      query: query.limit ? query.limit : DEFAULT_QUERY_LIMIT
     }
 
     const personalTrainingList =  this.personalTrainingModel
     .find({id})
     .sort([
       ['date', pageOptions.date]])
-    .limit(DEFAULT_LIMIT_PERSONAL_TRAINING)
-    .skip(pageOptions.page * DEFAULT_LIMIT_PERSONAL_TRAINING)
+    .limit(pageOptions.query)
+    .skip(pageOptions.page * pageOptions.query)
     .exec();
 
     return personalTrainingList;

@@ -1,9 +1,8 @@
 //Опросник пользователя
-POST http://localhost:3338/api/questionnaire/6420ca54ac103330b69a1709 HTTP/1.1
+POST http://localhost:3338/api/questionnaire HTTP/1.1
 Content-Type: application/json
 
 {
-  "userId": "6420ca54ac103330b69a1709",
   "trainLevel": "newbie",
   "typesTraining": "yoga",
   "timeTraining": 30,
@@ -14,11 +13,10 @@ Content-Type: application/json
 ###
 
 
-POST http://localhost:3338/api/questionnaire-coach/6420d9a5ae38867a78496793 HTTP/1.1
+POST http://localhost:3338/api/questionnaire-coach HTTP/1.1
 Content-Type: application/json
 
 {
-  "userId": "6420d9a5ae38867a78496793",
   "trainLevel": "newbie",
   "typesTraining": "yoga",
   "sertificates": "http://localhost:3338/api/setificates/1.jpg",

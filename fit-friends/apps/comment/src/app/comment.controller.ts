@@ -1,7 +1,7 @@
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { Body, Controller, Get, HttpStatus, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import { AppService } from './comment.service';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CheckMongoidValidationPipe, fillObject } from '@fit-friends/core';
 import { ExtendedUserRequest } from '@fit-friends/shared-types';
@@ -23,6 +23,7 @@ export class AppController {
     status: HttpStatus.NO_CONTENT,
     description: 'Comments are not found'
   })
+  @ApiOperation({summary: 'Get list of comments on training'})
   async findAll(@Param('workoutId') workoutId: string, @Query() query: CommentQuery) {
     const comments = await this.appService.findAll(workoutId, query);
     return fillObject(CommentRdo, comments);
@@ -39,6 +40,7 @@ export class AppController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not authorized',
   })
+  @ApiOperation({summary: 'Creating a new comment'})
   async createComment(
     @Param('workoutId', CheckMongoidValidationPipe) workoutId: string, 
     @Body() dto: CreateCommentDto, @Req() req: ExtendedUserRequest) {

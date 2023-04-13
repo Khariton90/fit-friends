@@ -3,13 +3,11 @@ import { UpdateFitUserDto } from './dto/update-fit-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { FitUserEntity } from './fit-user-entity';
-import { CRUDRepository } from "@fit-friends/core";
+import { CRUDRepository, DEFAULT_QUERY_LIMIT } from "@fit-friends/core";
 import { User } from '@fit-friends/shared-types';
 import { Model } from 'mongoose';
 import { UserModel } from './fit-user.model';
 import { FitUserQuery } from './query/fit-user.query';
-
-const DEFAULT_LIMIT_USERS = 50;
 
 @Injectable()
 export class FitUserRepository implements CRUDRepository<FitUserEntity, string, User> {
@@ -21,11 +19,12 @@ export class FitUserRepository implements CRUDRepository<FitUserEntity, string, 
   public async find(query: FitUserQuery) {
     const pageOptions = {
       page: query.skip > 1 ? query.skip - 1 : 0,
+      query: query.limit ? query.limit : DEFAULT_QUERY_LIMIT
     }
 
     const users = await this.fitUserModel.find()
-      .limit(DEFAULT_LIMIT_USERS)
-      .skip(pageOptions.page * DEFAULT_LIMIT_USERS).exec();
+      .limit(pageOptions.query)
+      .skip(pageOptions.page * pageOptions.query).exec();
       
     return users;
   }

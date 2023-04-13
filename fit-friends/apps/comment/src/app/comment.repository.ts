@@ -3,8 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CommentModel } from './comment.model';
 import { CommentQuery } from './query/comment.query';
-
-const DEFAULT_LIMIT_COMMENTS = 50;
+import { DEFAULT_QUERY_LIMIT } from '@fit-friends/core';
 
 export class CommentRepository {
   constructor(
@@ -15,14 +14,15 @@ export class CommentRepository {
     const pageOptions = {
       page: query.skip > 1 ? query.skip - 1 : 0,
       date: query.date || -1,
+      query: query.limit ? query.limit : DEFAULT_QUERY_LIMIT
     }
 
     const commentList = await this.commentModel
       .find({ author: id })
       .sort([
         ['date', pageOptions.date]])
-      .limit(DEFAULT_LIMIT_COMMENTS)
-      .skip(pageOptions.page * DEFAULT_LIMIT_COMMENTS)
+      .limit(pageOptions.query)
+      .skip(pageOptions.page * pageOptions.query)
       .exec();
 
     return commentList;

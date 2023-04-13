@@ -3,12 +3,10 @@ import { WorkoutModel } from './workout.model';
 import { InjectModel } from '@nestjs/mongoose';
 import { Injectable } from '@nestjs/common';
 import { WorkoutEntity } from './workout.entity';
-import { CRUDRepository } from "@fit-friends/core";
+import { CRUDRepository, DEFAULT_QUERY_LIMIT } from "@fit-friends/core";
 import { Workout } from '@fit-friends/shared-types';
 import { Model } from 'mongoose';
 import { WorkoutQuery } from './query/workout.query';
-
-const DEFAULT_LIMIT_WORKOUT = 50;
 
 @Injectable()
 export class WorkoutRepository implements CRUDRepository<WorkoutEntity, string, Workout>{
@@ -25,21 +23,22 @@ export class WorkoutRepository implements CRUDRepository<WorkoutEntity, string, 
     const pageOptions = {
       page: query.skip > 1 ? query.skip - 1 : 0,
       date: query.date || -1,
+      query: query.limit ? query.limit : DEFAULT_QUERY_LIMIT
     }
     
     const workoutList = await this.workoutModel
     .find({coach: id})
     .sort([
       ['date', pageOptions.date]])
-    .limit(DEFAULT_LIMIT_WORKOUT)
-    .skip(pageOptions.page * DEFAULT_LIMIT_WORKOUT)
+    .limit(pageOptions.query)
+    .skip(pageOptions.page * pageOptions.query)
     .exec();
 
     return workoutList;
   }
 
   async findById(id: string): Promise<Workout | null> {
-    const existWorkout = await this.workoutModel.findOne({id});
+    const existWorkout = await this.workoutModel.findById(id);
     return existWorkout;
   }
 

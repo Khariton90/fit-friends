@@ -1,4 +1,4 @@
-import { CRUDRepository } from "@fit-friends/core";
+import { CRUDRepository, DEFAULT_QUERY_LIMIT } from "@fit-friends/core";
 import { OrderEntity } from "./order.entity";
 import { Order } from "@fit-friends/shared-types";
 import { Injectable } from "@nestjs/common";
@@ -7,8 +7,6 @@ import { OrderModel } from "./order.model";
 import { Model } from "mongoose";
 import { OrderQuery } from "./query/order.query";
 
-const DEFAULT_LIMIT_ORDERS = 50;
-
 @Injectable()
 export class OrderRepository implements CRUDRepository<OrderEntity, string, Order> {
   constructor(
@@ -16,15 +14,18 @@ export class OrderRepository implements CRUDRepository<OrderEntity, string, Orde
   ) { }
 
   public async find(query: OrderQuery): Promise<Order[] | []> {
-    const sortOptions = {
+    const pageOptions = {
       price: query.price || 1,
-      quantity: query.quantity || -1
+      page: query.skip > 1 ? query.skip - 1 : 0,
+      quantity: query.quantity || -1,
+      query: query.limit ? query.limit : DEFAULT_QUERY_LIMIT
     }
 
     const orders = this.orderModel
       .find()
-      .sort([['amountPrice', sortOptions.price], ['quantity', sortOptions.quantity]])
-      .limit(DEFAULT_LIMIT_ORDERS)
+      .sort([['amountPrice', pageOptions.price], ['quantity', pageOptions.quantity]])
+      .limit(pageOptions.query)
+      .skip(pageOptions.page * pageOptions.query)
       .exec();
 
     return orders;

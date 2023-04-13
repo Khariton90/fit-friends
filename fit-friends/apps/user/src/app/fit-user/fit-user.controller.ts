@@ -1,7 +1,7 @@
 import { FitUserRdo } from './rdo/fit-user.rdo';
 import { CreateFitUserDto } from './dto/create-fit-user.dto';
 import { CommandEvent, ExtendedUserRequest } from '@fit-friends/shared-types';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { createEvent, fillObject } from '@fit-friends/core';
 import { FitUserService } from './fit-user.service';
 import { 
@@ -52,6 +52,7 @@ export class FitUserController {
     status: HttpStatus.BAD_REQUEST,
     description: 'The wrong data format'
   })
+  @ApiOperation({summary: 'New User Registration'})
   async create(@Body() dto: CreateFitUserDto) {
     const newUser = await this.fitUserService.register(dto);
 
@@ -69,6 +70,7 @@ export class FitUserController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not authorized'
   })
+  @ApiOperation({summary: 'Show a list of registered users'})
   async show(@Query() query: FitUserQuery, @Req() req: ExtendedUserRequest) {
     const users = await this.fitUserService.find(req.user.role, query);
     return fillObject(FitUserRdo, users);
@@ -79,12 +81,13 @@ export class FitUserController {
   @ApiResponse({
     status: HttpStatus.OK,
     type: FitUserRdo,
-    description: 'Received by ID user'
+    description: 'Show user information on ID'
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not authorized'
   })
+  @ApiOperation({summary: 'Show user information on ID'})
   async findById(@Param('id', CheckMongoidValidationPipe) id: string) {
     const user = await this.fitUserService.findById(id);
     return user;
@@ -101,17 +104,20 @@ export class FitUserController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'The user is not authorized'
   })
+  @ApiOperation({summary: 'Edition of user information'})
   async update(@Body() dto: UpdateFitUserDto, @Req() req: ExtendedUserRequest) {
     const updateUser = await this.fitUserService.update(req.user.sub, dto);
     return fillObject(FitUserRdo, updateUser);
   }
 
   @Get('avatar/:filename')
+  @ApiOperation({summary: 'Obtaining a link to the user avatar'})
   async getImage(@Param('filename') filename: string, @Res() res) {
     res.sendFile(filename, { root: './uploads' });
   }
 
   @Post('avatar/upload')
+  @ApiOperation({summary: 'Downloading user avatar'})
   @UseInterceptors(FileInterceptor('file', {
     storage: diskStorage({
       destination: './uploads',

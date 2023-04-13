@@ -23,13 +23,13 @@ export class QuestionnaireRepository {
     return existQuestion;
   }
 
-  async createUser(dto: CreateQuestionnareDto) {
-    const newQuestion = await this.questionnaireModel.create(dto);
+  async createUser(dto: CreateQuestionnareDto, userId: string) {
+    const newQuestion = await this.questionnaireModel.create({...dto, userId});
     return newQuestion.save();
   }
 
-  async createCoach(dto: CreateCoachQuestionnareDto) {
-    const newQuestion = await this.questionnaireCoachModel.create(dto);
+  async createCoach(dto: CreateCoachQuestionnareDto, userId: string) {
+    const newQuestion = await this.questionnaireCoachModel.create({...dto, userId});
     return newQuestion.save();
   }
 }

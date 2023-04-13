@@ -2,7 +2,7 @@ import { UpdateWorkoutDto } from './dto/update-workout.dto';
 import { WorkoutRdo } from './rdo/workout.rdo';
 import { CheckMongoidValidationPipe, fillObject } from '@fit-friends/core';
 import { ExtendedUserRequest } from '@fit-friends/shared-types';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { Controller, Body, UseGuards, Post, Req, Put, Param, Get, Res, HttpStatus, Query } from '@nestjs/common';
@@ -25,24 +25,25 @@ export class AppController {
     status: HttpStatus.UNAUTHORIZED,
     description: "The user is not authorized"
   })
+  @ApiOperation({summary: 'Create new workout'})
   async createWorkout(@Body() dto: CreateWorkoutDto, @Req() { user }: ExtendedUserRequest) {
     const newWorkout = await this.appService.createWorkout(user, {...dto, coach: user.sub});
     return fillObject(WorkoutRdo, newWorkout);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('/all/:coachId')
+  @Get('/all')
   @ApiResponse({
     type: [WorkoutRdo],
     status: HttpStatus.OK,
     description: "A list of training has been received"
   })
+  @ApiOperation({summary: 'Get workout list'})
   async findAllWorkout(
-    @Param('coachId', CheckMongoidValidationPipe) coachId: string, 
     @Req() { user }: ExtendedUserRequest,
     @Query() query: WorkoutQuery
     ) {
-    const workoutList = await this.appService.find(coachId, user, query);
+    const workoutList = await this.appService.find(user.sub, user, query);
     return fillObject(WorkoutRdo, workoutList);
   }
 
@@ -57,6 +58,7 @@ export class AppController {
     status: HttpStatus.UNAUTHORIZED,
     description: "The user is not authorized"
   })
+  @ApiOperation({summary: 'Get workout by ID'})
   async findById(@Param('workoutId', CheckMongoidValidationPipe) workoutId: string) {
     const workout = await this.appService.findById(workoutId);
     return fillObject(WorkoutRdo, workout);
@@ -77,6 +79,7 @@ export class AppController {
     status: HttpStatus.BAD_REQUEST,
     description: "The server expected other data"
   })
+  @ApiOperation({summary: 'Update workout by ID'})
   async updateWorkout(
     @Param('id', CheckMongoidValidationPipe) id: string, 
     @Body() dto: UpdateWorkoutDto, 
@@ -97,6 +100,7 @@ export class AppController {
     status: HttpStatus.UNAUTHORIZED,
     description: "The user is not authorized"
   })
+  @ApiOperation({summary: 'Get workout image link'})
   async getPhoto(@Param('filename') filename: string, @Res() res) {
     res.sendFile(filename, { root: './uploads' });
   }

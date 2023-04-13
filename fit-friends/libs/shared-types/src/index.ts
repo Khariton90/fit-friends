@@ -19,3 +19,4 @@ export * from './lib/location.enum';
 export * from './lib/extended-user-request.interface';
 export * from './lib/subscriber.interface';
 export * from './lib/command-event.enum';
+export * from './lib/query.interface';
