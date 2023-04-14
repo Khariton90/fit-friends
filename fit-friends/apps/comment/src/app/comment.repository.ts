@@ -18,7 +18,7 @@ export class CommentRepository {
     }
 
     const commentList = await this.commentModel
-      .find({ author: id })
+      .find({ workout: id })
       .sort([
         ['date', pageOptions.date]])
       .limit(pageOptions.query)

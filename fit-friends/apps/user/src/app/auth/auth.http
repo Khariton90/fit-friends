@@ -1,9 +1,6 @@
 //Сервис Auth
 @Host = localhost
 @Port = 3338
-@ApiKey = Bearer api-key-one
-@UserId = id
-
 
 ### Регистрация пользователя
 POST http://{{Host}}:{{Port}}/api/fit-user/register HTTP/1.1

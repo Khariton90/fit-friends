@@ -26,6 +26,7 @@ export class AppController {
   @ApiOperation({summary: 'Get list of comments on training'})
   async findAll(@Param('workoutId') workoutId: string, @Query() query: CommentQuery) {
     const comments = await this.appService.findAll(workoutId, query);
+    console.log(comments);
     return fillObject(CommentRdo, comments);
   }
 

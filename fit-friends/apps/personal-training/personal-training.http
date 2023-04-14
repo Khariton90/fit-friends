@@ -1,17 +1,28 @@
 //Сервис Персональная тренировка
 @Host = localhost
 @Port = 3337
-@ApiKey = Bearer api-key-one
-@TrainingId = id
+@TrainingId = {{training.response.body.id}}
+
+# @name login 
+POST http://{{Host}}:3338/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "newMan@mail.ru",
+  "password": "1234567"
+}
+###
+@ApiKey = Bearer {{login.response.body.accessToken}}
 
 ### Создание оповещения о персольнальной тренировке
+# @name training
 POST http://{{Host}}:{{Port}}/api/personal-training/create HTTP/1.1
 Content-Type: application/json
 Authorization: {{ApiKey}}
 
 {
-  "initiator": "642858ae021f7d1433c22c74",
-  "user": "642858ae021f7d1433c22c72",
+  "initiator": "6437d1cd4ba88e37a5aad724",
+  "user": "642858ae021f7d1433c22c74",
   "status": "pending"
 }
 ###
@@ -21,7 +32,6 @@ GET http://{{Host}}:{{Port}}/api/personal-training/all HTTP/1.1
 Content-Type: application/json
 Authorization: {{ApiKey}}
 ###
-
 
 ### Редактирование оповещения о персольнальной тренировке
 PUT http://{{Host}}:{{Port}}/api/personal-training/{{TrainingId}} HTTP/1.1

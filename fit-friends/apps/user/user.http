@@ -1,8 +1,18 @@
 //Сервис Пользователи
 @Host = localhost
 @Port = 3338
-@ApiKey = Bearer token
-@UserId = id
+
+# @name login 
+POST http://{{Host}}:{{Port}}/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "newMan@mail.ru",
+  "password": "1234567"
+}
+###
+@ApiKey = Bearer {{login.response.body.accessToken}}
+@UserId = {{login.response.body.id}}
 
 
 ### Регистрация пользователя
@@ -25,7 +35,7 @@ Content-Type: application/json
 ### Опросник тренера
 POST http://{{Host}}:{{Port}}/api/questionnaire-coach/ HTTP/1.1
 Content-Type: application/json
-Authorization: {{ApiKey}}
+Authorization:{{ApiKey}}
 
 {
   "trainLevel": "newbie",
