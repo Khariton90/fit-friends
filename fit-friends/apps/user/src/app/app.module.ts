@@ -11,6 +11,12 @@ import envSchema from './env.schema';
 import { jwtOptions } from './config/jwt.config';
 import { QuestionnaireModule } from './questionnaire/questionnaire.module';
 import { rabbitMqOptions } from './config/rabbitmq.config';
+import { PersonalAccountModule } from './personal-account/personal-account.module';
+import { FavoritesGymModule } from './favorites-gym/favorites-gym.module';
+import { FriendsModule } from './friends/friends.module';
+import { FoodJournalController } from './food-journal/food-journal.controller';
+import { FoodJournalModule } from './food-journal/food-journal.module';
+import { TrainingJournalModule } from './training-journal/training-journal.module';
 
 @Module({
   imports: [
@@ -25,8 +31,13 @@ import { rabbitMqOptions } from './config/rabbitmq.config';
     AuthModule,
     FitUserModule,
     QuestionnaireModule,
+    PersonalAccountModule,
+    FavoritesGymModule,
+    FriendsModule,
+    FoodJournalModule,
+    TrainingJournalModule,
   ],
-  controllers: [],
+  controllers: [FoodJournalController],
   providers: [AppService],
 })
 export class AppModule {}

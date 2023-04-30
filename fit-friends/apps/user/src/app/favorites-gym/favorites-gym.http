@@ -1,0 +1,20 @@
+//Сервис Пользователи
+@Host = localhost
+@Port = 3338
+@ApiKey = Bearer {{login.response.body.accessToken}}
+
+# @name login 
+POST http://{{Host}}:3338/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "john6@gmail.com",
+  "password": "123456"
+}
+###
+
+POST  http://{{Host}}:{{Port}}/api/favorites-gym/644d69e04539f28a02e5a2c3 HTTP/1.1
+Content-Type: application/json
+Authorization: {{ApiKey}}
+
+###

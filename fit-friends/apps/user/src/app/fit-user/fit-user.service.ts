@@ -12,12 +12,18 @@ import { CommandEvent, UserRole } from '@fit-friends/shared-types';
 import { CoachQuestionnareRdo } from '../questionnaire/rdo/coach-questionnare.rto';
 import { ClientProxy } from '@nestjs/microservices';
 import { FitUserQuery } from './query/fit-user.query';
+import { FavoritesGymService } from '../favorites-gym/favorites-gym.service';
+import { FriendsService } from '../friends/friends.service';
+import { FoodJournalService } from '../food-journal/food-journal.service';
 
 @Injectable()
 export class FitUserService {
   constructor(
     private readonly fitUserRepository: FitUserRepository,
     private readonly questionnaireRepository: QuestionnaireRepository,
+    private readonly favoritesGymService: FavoritesGymService,
+    private readonly friendsService: FriendsService,
+    private readonly foodJournalService: FoodJournalService,
     @Inject("RABBITMQ_SERVICE") private readonly rabbitClient: ClientProxy,
   ) { }
 
@@ -43,6 +49,12 @@ export class FitUserService {
     }
     const fitUserEntity = await new FitUserEntity(fitUser).setPassword(password);
     const createFitUser = await this.fitUserRepository.create(fitUserEntity);
+
+    if (role === UserRole.User) {
+      await this.favoritesGymService.create(createFitUser._id);
+      await this.friendsService.create(createFitUser._id);
+    }
+
     return createFitUser;
   }
 

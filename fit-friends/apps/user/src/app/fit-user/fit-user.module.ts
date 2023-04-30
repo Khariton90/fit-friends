@@ -10,6 +10,9 @@ import { QuestionnaireCoachModel, QuestionnaireCoachModelSchema } from '../quest
 import { ClientsModule } from '@nestjs/microservices';
 import { getRabbitMqConfig } from '../config/rabbitmq.config';
 import { ConfigService } from '@nestjs/config';
+import { FavoritesGymModule } from '../favorites-gym/favorites-gym.module';
+import { FriendsModule } from '../friends/friends.module';
+import { FoodJournalModule } from '../food-journal/food-journal.module';
 
 @Module({
   imports: [
@@ -34,7 +37,10 @@ import { ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }
   ]),
-  QuestionnaireModule
+  QuestionnaireModule,
+  FavoritesGymModule,
+  FriendsModule,
+  FoodJournalModule
 ],
   providers: [FitUserService, FitUserRepository],
   controllers: [FitUserController],
